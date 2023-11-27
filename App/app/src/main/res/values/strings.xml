@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">MuseCMEB</string>
+    <string name="history"> History </string>
+    <string name="sessionButton"> Exit </string>
+    <string name="back_button_description"> Back Button in the history view layout </string>
 </resources>
