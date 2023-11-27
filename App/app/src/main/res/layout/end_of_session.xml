@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="#83C5BE">
+
+    <TextView
+        android:id="@+id/congratulationsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="Congratulations, you are relaxed!"
+        android:textSize="20sp"
+        android:textColor="#FFFFFF" />
+
+    <org.mines.cmeb.musecmeb.CircularImageView
+        android:id="@+id/happyFaceImageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/happy_face"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:id="@+id/sessionTimeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="5 min and 34 sec"
+        android:textSize="16sp"
+        android:textColor="#FFFFFF"/>
+
+</LinearLayout>
