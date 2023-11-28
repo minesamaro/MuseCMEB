@@ -44,12 +44,21 @@
             android:layout_marginBottom="10dp" />
 
         <TextView
+            android:id="@+id/secondLineTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="Time of relaxation:"
+            android:textSize="18sp"
+            android:textColor="#FFFFFF" />
+
+        <TextView
             android:id="@+id/sessionTimeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:text="5 min and 34 sec"
-            android:textSize="18sp"
+            android:textSize="22sp"
             android:textColor="#FFFFFF"/>
     </LinearLayout>
 </LinearLayout>
