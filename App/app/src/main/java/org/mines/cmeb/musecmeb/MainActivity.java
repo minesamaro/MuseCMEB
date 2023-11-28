@@ -31,6 +31,12 @@ public class MainActivity extends AppCompatActivity {
             if(item.getItemId()==R.id.profile4) {
                 replaceFragment(new ProfileFragment());
             }
+            if(item.getItemId()==R.id.menu3) {
+                replaceFragment(new MenuFragment());
+            }
+            if(item.getItemId()==R.id.history) {
+                replaceFragment(new HistoryFragment());
+            }
 
             return false;
         });
