@@ -44,16 +44,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		ContentValues values = new ContentValues();
 		values.put(COLUMN_STRESS_INDEXES, "1,2,3,4,5");
 		values.put(COLUMN_RELAXATION_TIME, 10.5f);
-		values.put(COLUMN_START_DATE, "2022-01-01 00:00:00");
+		values.put(COLUMN_START_DATE, "2022-01-01");
 		long rowId1 = db.insert(TABLE_SESSIONS, null, values);
 
 		ContentValues values2 = new ContentValues();
-		values2.put(COLUMN_STRESS_INDEXES, "6,7,8,9,10");
-		values2.put(COLUMN_RELAXATION_TIME, 20.5f);
-		values2.put(COLUMN_START_DATE, "2022-02-01 00:00:00");
+		values2.put(COLUMN_STRESS_INDEXES, "4,2,7,4,5");
+		values2.put(COLUMN_RELAXATION_TIME, 14.5f);
+		values2.put(COLUMN_START_DATE, "2022-02-05");
 		long rowId2 = db.insert(TABLE_SESSIONS, null, values2);
 
-		Log.d("DatabaseHelper", "Inserted row IDs: " + rowId1 + ", " + rowId2);
+		ContentValues values3 = new ContentValues();
+		values3.put(COLUMN_STRESS_INDEXES, "6,7,8,9,10");
+		values3.put(COLUMN_RELAXATION_TIME, 20.5f);
+		values3.put(COLUMN_START_DATE, "2022-02-08" );
+		long rowId3 = db.insert(TABLE_SESSIONS, null, values3);
+
+		Log.d("DatabaseHelper", "Inserted row IDs: " + rowId1 + ", " + rowId2+ ", " + rowId3);
 	}
 
 	@Override

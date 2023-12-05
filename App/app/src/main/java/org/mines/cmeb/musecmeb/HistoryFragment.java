@@ -13,11 +13,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class HistoryFragment extends Fragment {
 
     private ListView listView;
+    private List<RelaxationSession> sessions;
 
     public HistoryFragment() {
         // Required empty public constructor
@@ -38,6 +41,13 @@ public class HistoryFragment extends Fragment {
                 // Create a new instance of PastSessionFragment
                 PastSessionFragment pastSessionFragment = new PastSessionFragment();
 
+                // Create a bundle and put the selected RelaxationSession into it
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("session", sessions.get(position));
+
+                // Set the bundle as arguments to the PastSessionFragment
+                pastSessionFragment.setArguments(bundle);
+
                 // Use the FragmentManager to start a FragmentTransaction
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
 
@@ -51,13 +61,20 @@ public class HistoryFragment extends Fragment {
                 transaction.commit();
             }
         });
-
         return view;
     }
 
     private void displayData() {
         DatabaseHelper dbHelper = new DatabaseHelper(getContext());
-        List<RelaxationSession> sessions = dbHelper.getAllRelaxationSessions();
+        sessions = dbHelper.getAllRelaxationSessions();
+
+        // Sort the sessions in descending order of startDate
+        Collections.sort(sessions, new Comparator<RelaxationSession>() {
+            @Override
+            public int compare(RelaxationSession s1, RelaxationSession s2) {
+                return s2.getStartDate().compareTo(s1.getStartDate());
+            }
+        });
 
         Log.d("HistoryFragment", "Number of sessions retrieved: " + sessions.size());
 

@@ -10,8 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.util.Arrays;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class RelaxationSessionAdapter extends ArrayAdapter<RelaxationSession> {
     private final Context context;
@@ -29,14 +30,15 @@ public class RelaxationSessionAdapter extends ArrayAdapter<RelaxationSession> {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.row, parent, false);
 
-        TextView stressIndexesView = rowView.findViewById(R.id.stress_indexes);
-        TextView relaxationTimeView = rowView.findViewById(R.id.relaxation_time);
+        TextView sessionTextView = rowView.findViewById(R.id.session_text);
         TextView startDateView = rowView.findViewById(R.id.start_date);
 
-        RelaxationSession session = sessions.get(position);
-        stressIndexesView.setText(Arrays.toString(session.getStressIndexes()));
-        relaxationTimeView.setText(String.valueOf(session.getRelaxationTime()));
-        startDateView.setText(session.getStartDate().toString());
+        // Format the date
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        String formattedDate = sdf.format(sessions.get(position).getStartDate());
+
+        sessionTextView.setText("Session");
+        startDateView.setText(formattedDate);
 
         return rowView;
     }
