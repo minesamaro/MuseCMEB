@@ -3,13 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileFragment">
+    tools:context=".ProfileFragment"
+    android:background="#83c5be">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/textView"
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/indexesChart"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="&quot;Session Not Added&quot;" />
+        android:layout_height="@dimen/height_line_chart"
+        android:layout_marginTop="160dp"
+        android:layout_marginBottom="160dp"/>
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/sessionActivity"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_line_chart"
+        android:layout_marginTop="160dp"
+        android:layout_marginBottom="160dp"/>
 
 </FrameLayout>

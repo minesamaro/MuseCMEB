@@ -122,9 +122,9 @@ public class PastSessionFragment extends Fragment{
 
 
         String title = "Session "+ String.valueOf(sessionId)
-                + " - " + String.valueOf(startDate);
+                + " - " + getFormattedDate(startDate);
 
-        String time = "Time of relaxation: " + String.valueOf(relaxationTime);
+        String time = "Time of relaxation: " + getFormattedTimeOfRelaxation(relaxationTime);
 
         sessionTitle.setText(title);
         relaxTimeText.setText(time);
@@ -146,6 +146,21 @@ public class PastSessionFragment extends Fragment{
         fragmentManager.beginTransaction()
                 .replace(R.id.frame_layout,fragment)
                 .commit();
+    }
+
+    private String getFormattedDate(Date date){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+        // Use the format method to format the Date object
+        return sdf.format(date);
+    }
+
+    private String getFormattedTimeOfRelaxation(float time){
+        int minutes = (int) time;
+        int seconds = (int) ((time - minutes) * 60);
+
+        // Create a string representation
+        return String.format("%d min %d sec", minutes, seconds);
     }
 
 

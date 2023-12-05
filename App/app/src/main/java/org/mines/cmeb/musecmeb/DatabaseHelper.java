@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -141,5 +142,67 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	public float[] getAllRelaxationTimes() {
+		List<Float> relaxationTimesList = new ArrayList<>();
+
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.query(TABLE_SESSIONS, new String[]{COLUMN_RELAXATION_TIME},
+				null, null, null, null, COLUMN_ID + " ASC" );
+
+		if (cursor != null && cursor.moveToFirst()) {
+			do {
+				float relaxationTime = cursor.getFloat(cursor.getColumnIndex(COLUMN_RELAXATION_TIME));
+				relaxationTimesList.add(relaxationTime);
+			} while (cursor.moveToNext());
+
+			cursor.close();
+		}
+
+		db.close();
+
+		// Convert List<Float> to float[]
+		float[] relaxationTimesArray = new float[relaxationTimesList.size()];
+		for (int i = 0; i < relaxationTimesList.size(); i++) {
+			relaxationTimesArray[i] = relaxationTimesList.get(i);
+		}
+
+		return relaxationTimesArray;
+	}
+
+	// Method to get session counts for the last 7 days
+	public int[] getSessionCountsLast7Days() {
+		int[] sessionCounts = new int[7];
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+		SQLiteDatabase db = this.getReadableDatabase();
+
+		for (int i = 0; i < 7; i++) {
+			Calendar calendar = Calendar.getInstance();
+			calendar.add(Calendar.DAY_OF_YEAR, -i);
+			Date date = calendar.getTime();
+			String formattedDate = dateFormat.format(date);
+
+			String[] selectionArgs = {formattedDate + "%"};
+			Cursor cursor = db.query(TABLE_SESSIONS,
+					new String[]{"COUNT(*)"},
+					COLUMN_START_DATE + " LIKE ?",
+					selectionArgs,
+					null,
+					null,
+					null);
+
+			if (cursor != null && cursor.moveToFirst()) {
+				sessionCounts[i] = cursor.getInt(0);
+				cursor.close();
+			} else {
+				sessionCounts[i] = 0;
+			}
+		}
+
+		db.close();
+
+		return sessionCounts;
 	}
 }
