@@ -1,8 +1,9 @@
 package org.mines.cmeb.musecmeb;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class RelaxationSession {
+public class RelaxationSession implements Serializable {
 
     private int id;
     private int[] stressIndexes;
