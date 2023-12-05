@@ -42,7 +42,7 @@ public class HistoryFragment extends Fragment {
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
 
                 // Replace the current Fragment with the new PastSessionFragment instance
-                transaction.replace(((ViewGroup)getView().getParent()).getId(), pastSessionFragment);
+                transaction.replace(R.id.frame_layout, pastSessionFragment);
 
                 // Add the transaction to the back stack so the user can navigate back
                 transaction.addToBackStack(null);

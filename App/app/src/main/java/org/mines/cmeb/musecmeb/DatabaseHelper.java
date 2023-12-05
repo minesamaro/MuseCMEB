@@ -54,7 +54,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		long rowId2 = db.insert(TABLE_SESSIONS, null, values2);
 
 		Log.d("DatabaseHelper", "Inserted row IDs: " + rowId1 + ", " + rowId2);
-		db.close();
 	}
 
 	@Override
