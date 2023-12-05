@@ -37,7 +37,10 @@ public class RelaxationSessionAdapter extends ArrayAdapter<RelaxationSession> {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         String formattedDate = sdf.format(sessions.get(position).getStartDate());
 
-        sessionTextView.setText("Session");
+        // Append the session id to the "Session" string
+        String sessionText = "Session " + sessions.get(position).getId();
+
+        sessionTextView.setText(sessionText);
         startDateView.setText(formattedDate);
 
         return rowView;

@@ -72,7 +72,7 @@ public class HistoryFragment extends Fragment {
         Collections.sort(sessions, new Comparator<RelaxationSession>() {
             @Override
             public int compare(RelaxationSession s1, RelaxationSession s2) {
-                return s2.getStartDate().compareTo(s1.getStartDate());
+                return Integer.compare(s2.getId(), s1.getId());
             }
         });
 
