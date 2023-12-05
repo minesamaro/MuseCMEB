@@ -8,6 +8,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import org.mines.cmeb.musecmeb.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -15,19 +17,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        DatabaseHelper databaseHelper = new DatabaseHelper(this);
+
         binding=ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        // Startup in the menu tab
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setSelectedItemId(R.id.menu3);
+        replaceFragment(new MenuFragment());
+
+
+        // Change Fragments According to the selected tab
         binding.bottomNavigationView.setOnItemSelectedListener(item-> {
-            //switch () {
-                //case R.id.profile4:
-
-                    //break;
-                //case R.id.menu3:
-                    //replaceFragment(new MenuFragment());
-                    //break;
-
-            //}
-            //return true;
             if(item.getItemId()==R.id.profile4) {
                 replaceFragment(new ProfileFragment());
             }
@@ -42,11 +45,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
     private void replaceFragment (Fragment fragment){
         FragmentManager fragmentManager= getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction= fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout,fragment);
-        fragmentTransaction.commit();
+        fragmentManager.beginTransaction()
+                .replace(R.id.frame_layout,fragment)
+                .commit();
     }
 
 

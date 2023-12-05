@@ -7,4 +7,5 @@
     <string name="hello_profile">Hello profile</string>
     <string name="hello_menu">Hello menu</string>
     <string name="hello_history">Hello history</string>
+    <string name="dash">-</string>
 </resources>

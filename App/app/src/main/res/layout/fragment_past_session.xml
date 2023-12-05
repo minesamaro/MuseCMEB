@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:paddingLeft="8dp"
     android:paddingRight="8dp"
-    android:background="#83C5BE">
+    android:background="#83c5be">
 
     <ImageButton
         android:id="@+id/backButton"
@@ -27,13 +27,15 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"/>
 
-    <ImageView
-        android:id="@+id/graphImage"
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/chart1"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:src="@drawable/graph_example"
-        android:scaleType="fitCenter"
-        android:layout_marginTop="16dp"/>
+        android:layout_height="@android:dimen/thumbnail_height"
+        android:layout_above="@+id/line_chart" />
+
+
+
     <TextView
         android:id="@+id/relaxTimeText"
         android:layout_width="wrap_content"
