@@ -37,25 +37,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		String createTableQuery = "CREATE TABLE " + TABLE_SESSIONS + " (" +
 				COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				COLUMN_STRESS_INDEXES + " TEXT, " +
-				COLUMN_RELAXATION_TIME + " REAL, " +
+				COLUMN_RELAXATION_TIME + " INTEGER, " +
 				COLUMN_START_DATE + " TEXT)";
 		db.execSQL(createTableQuery);
 
 		ContentValues values = new ContentValues();
 		values.put(COLUMN_STRESS_INDEXES, "1,2,3,4,5");
-		values.put(COLUMN_RELAXATION_TIME, 10.5f);
+		values.put(COLUMN_RELAXATION_TIME, 20.5f);
 		values.put(COLUMN_START_DATE, "2022-01-01");
 		long rowId1 = db.insert(TABLE_SESSIONS, null, values);
 
 		ContentValues values2 = new ContentValues();
 		values2.put(COLUMN_STRESS_INDEXES, "4,2,7,4,5");
-		values2.put(COLUMN_RELAXATION_TIME, 14.5f);
+		values2.put(COLUMN_RELAXATION_TIME, 18.5f);
 		values2.put(COLUMN_START_DATE, "2022-02-05");
 		long rowId2 = db.insert(TABLE_SESSIONS, null, values2);
 
 		ContentValues values3 = new ContentValues();
 		values3.put(COLUMN_STRESS_INDEXES, "6,7,8,9,10");
-		values3.put(COLUMN_RELAXATION_TIME, 20.5f);
+		values3.put(COLUMN_RELAXATION_TIME, 47.2f);
 		values3.put(COLUMN_START_DATE, "2022-02-08" );
 		long rowId3 = db.insert(TABLE_SESSIONS, null, values3);
 
@@ -129,12 +129,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	private String formatDateToString(Date date) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 		return sdf.format(date);
 	}
 
 	private Date parseStringToDate(String str) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 		try {
 			return sdf.parse(str);
 		} catch (ParseException e) {
