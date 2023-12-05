@@ -5,10 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -38,6 +40,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 				COLUMN_RELAXATION_TIME + " REAL, " +
 				COLUMN_START_DATE + " TEXT)";
 		db.execSQL(createTableQuery);
+
+		ContentValues values = new ContentValues();
+		values.put(COLUMN_STRESS_INDEXES, "1,2,3,4,5");
+		values.put(COLUMN_RELAXATION_TIME, 10.5f);
+		values.put(COLUMN_START_DATE, "2022-01-01 00:00:00");
+		long rowId1 = db.insert(TABLE_SESSIONS, null, values);
+
+		ContentValues values2 = new ContentValues();
+		values2.put(COLUMN_STRESS_INDEXES, "6,7,8,9,10");
+		values2.put(COLUMN_RELAXATION_TIME, 20.5f);
+		values2.put(COLUMN_START_DATE, "2022-02-01 00:00:00");
+		long rowId2 = db.insert(TABLE_SESSIONS, null, values2);
+
+		Log.d("DatabaseHelper", "Inserted row IDs: " + rowId1 + ", " + rowId2);
+		db.close();
 	}
 
 	@Override
@@ -66,6 +83,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		String selectQuery = "SELECT * FROM " + TABLE_SESSIONS;
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery(selectQuery, null);
+		Log.d("DatabaseHelper", "Cursor count: " + cursor.getCount());
 
 		if (cursor.moveToFirst()) {
 			do {
@@ -76,11 +94,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 				RelaxationSession session = new RelaxationSession(id, stressIndexes, relaxationTime, startDate);
 				sessions.add(session);
+				Log.d("DatabaseHelper", "Session ID: " + id + ", Stress Indexes: " + Arrays.toString(stressIndexes) + ", Relaxation Time: " + relaxationTime + ", Start Date: " + startDate.toString());
 			} while (cursor.moveToNext());
 		}
 
 		cursor.close();
 		db.close();
+		Log.d("DatabaseHelper", "Number of sessions retrievedd: " + sessions.size());
 		return sessions;
 	}
 
