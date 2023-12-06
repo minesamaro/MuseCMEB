@@ -1,5 +1,6 @@
 package org.mines.cmeb.musecmeb;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +8,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,6 +52,7 @@ public class MenuFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -58,7 +62,19 @@ public class MenuFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_menu, container, false);
+
+        // Central button to start a session (for some reason, works with an ImageView as a button)
+        ImageView startButton = view.findViewById(R.id.startSessionBt);
+
+        // Starts the Session activity when the button is clicked
+        startButton.setOnClickListener(view1 -> {
+            Intent intent = new Intent(getActivity(), Session.class);
+            startActivity(intent);
+        });
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_menu, container, false);
+        return view;
     }
 }

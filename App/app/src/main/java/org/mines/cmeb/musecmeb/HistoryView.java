@@ -17,11 +17,8 @@ public class HistoryView extends AppCompatActivity {
         ImageButton backButton = findViewById(R.id.backButton);
 
         // Set click listener for the back button
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed(); // Finish the activity when the back button is clicked
-            }
+        backButton.setOnClickListener(view -> {
+            onBackPressed(); // Finish the activity when the back button is clicked
         });
     }
 }

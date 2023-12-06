@@ -21,6 +21,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".Session"
+            android:exported="true"
+            android:parentActivityName=".Session">
+        </activity>
     </application>
 
 </manifest>

@@ -21,11 +21,13 @@ public class Session extends AppCompatActivity {
         circleView.setPaint(paint);
 
         // Size settings
-        circleView.stressIdxToRadius(14);
+        circleView.stressIdxToRadius(50);
         circleView.startPulsatingAnimation();
 
-        Button button = findViewById(R.id.sessionBt);
+        Button button = findViewById(R.id.sessionExitBt);
         button.setBackgroundColor(hexToColor("#F96E46"));
+
+        button.setOnClickListener(v -> onBackPressed());
     }
 
     private int hexToColor(String colorHex) {
