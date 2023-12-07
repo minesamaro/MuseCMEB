@@ -1,9 +1,11 @@
 package org.mines.cmeb.musecmeb;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -43,6 +45,8 @@ public class ProfileFragment extends Fragment {
     private String mParam2;
     private LineChart indexesChart;
     private BarChart sessionActivity;
+    int light_blue;
+    int pink;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -84,8 +88,13 @@ public class ProfileFragment extends Fragment {
         indexesChart = view.findViewById(R.id.indexesChart);
         sessionActivity = view.findViewById(R.id.sessionActivity);
 
+        Context context = getContext();
+        light_blue = ContextCompat.getColor(context, R.color.our_light_blue);
+        pink = ContextCompat.getColor(context, R.color.our_pink);
+
         // Retrieve data from past sessions
         lineChart();
+        barChart();
 
         return view;
     }
@@ -104,29 +113,32 @@ public class ProfileFragment extends Fragment {
         indexesChart.getDescription().setEnabled(false);
         indexesChart.setBackgroundColor(Color.TRANSPARENT);
         indexesChart.setNoDataText("No data was recorded in this session");
-        indexesChart.setNoDataTextColor(Color.parseColor("#edf6f9"));
+        indexesChart.setNoDataTextColor(pink);
         indexesChart.setKeepPositionOnRotation(true);
         indexesChart.setTouchEnabled(true);
         indexesChart.setDrawGridBackground(false);
 
         lineDataSet1.setLineWidth(2);
-        lineDataSet1.setColor(Color.parseColor("#edf6f9"));
-        lineDataSet1.setCircleColor(Color.parseColor("#edf6f9"));
+        lineDataSet1.setColor(pink);
+        lineDataSet1.setCircleColor(pink);
         lineDataSet1.setValueTextSize(10);
-        lineDataSet1.setValueTextColor(Color.parseColor("#edf6f9"));
+        lineDataSet1.setValueTextColor(pink);
 
         // Position the X-axis at the bottom and change colors
         XAxis xAxis = indexesChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setGridColor(Color.WHITE);
-        xAxis.setAxisLineColor(Color.WHITE);
-        xAxis.setTextColor(Color.parseColor("#edf6f9"));
+        xAxis.setGridColor(pink);
+        xAxis.setAxisLineColor(pink);
+        xAxis.setTextColor(pink);
+        xAxis.setDrawGridLines(false);
 
         // Get y Axis and change colors
         YAxis yAxis = indexesChart.getAxisLeft();
-        yAxis.setGridColor(Color.WHITE);
-        yAxis.setAxisLineColor(Color.WHITE);
-        yAxis.setTextColor(Color.parseColor("#edf6f9"));
+        yAxis.setGridColor(pink);
+        yAxis.setAxisLineColor(pink);
+        yAxis.setTextColor(pink);
+        yAxis.setDrawGridLines(false);
+        yAxis.setAxisMinimum(0f);
 
         // Plot the chart
         LineData data = new LineData(dataSets);
@@ -142,34 +154,36 @@ public class ProfileFragment extends Fragment {
 
         // Line Chart Definitions and settings
         BarDataSet barDataSet1 = new BarDataSet(dataValues(sessionCounts), "Sessions per day");
-        ArrayList<BarDataSet> dataSets = new ArrayList<>();
-        dataSets.add(barDataSet1);
+        BarData barData = new BarData(barDataSet1);
+        sessionActivity.setData(barData);
 
         sessionActivity.getAxisRight().setEnabled(false);
         sessionActivity.getDescription().setEnabled(false);
         sessionActivity.setBackgroundColor(Color.TRANSPARENT);
         sessionActivity.setNoDataText("No data was recorded in this session");
-        sessionActivity.setNoDataTextColor(Color.parseColor("#edf6f9"));
+        sessionActivity.setNoDataTextColor(pink);
         sessionActivity.setKeepPositionOnRotation(true);
         sessionActivity.setTouchEnabled(true);
         sessionActivity.setDrawGridBackground(false);
 
-        barDataSet1.setColor(Color.parseColor("#edf6f9"));
+        barDataSet1.setColor(pink);
         barDataSet1.setValueTextSize(10);
-        barDataSet1.setValueTextColor(Color.parseColor("#edf6f9"));
+        barDataSet1.setValueTextColor(pink);
 
         // Position the X-axis at the bottom and change colors
         XAxis xAxis = sessionActivity.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setGridColor(Color.WHITE);
-        xAxis.setAxisLineColor(Color.WHITE);
-        xAxis.setTextColor(Color.parseColor("#edf6f9"));
+        xAxis.setGridColor(pink);
+        xAxis.setAxisLineColor(pink);
+        xAxis.setTextColor(pink);
+        xAxis.setDrawGridLines(false);
 
         // Get y Axis and change colors
-        YAxis yAxis = indexesChart.getAxisLeft();
-        yAxis.setGridColor(Color.WHITE);
-        yAxis.setAxisLineColor(Color.WHITE);
-        yAxis.setTextColor(Color.parseColor("#edf6f9"));
+        YAxis yAxis = sessionActivity.getAxisLeft();
+        yAxis.setGridColor(pink);
+        yAxis.setAxisLineColor(pink);
+        yAxis.setTextColor(pink);
+        yAxis.setDrawGridLines(false);
 
         // Plot the chart
         BarData data = new BarData();

@@ -1,23 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileFragment"
-    android:background="#83c5be">
+    android:background="@color/our_lighter_blue"
+    android:orientation="vertical"
+    android:padding="50dp"
+    tools:context=".ProfileFragment">
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/indexesChart"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_line_chart"
-        android:layout_marginTop="160dp"
-        android:layout_marginBottom="160dp"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/sessionActivity"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/height_line_chart"
-        android:layout_marginTop="160dp"
-        android:layout_marginBottom="160dp"/>
+        <TextView
+            android:id="@+id/userName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
+            android:text="User"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/lineLegend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Time of Relaxation evolution"
+            android:textAlignment="center" />
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/indexesChart"
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+
+        </com.github.mikephil.charting.charts.LineChart>
+
+        <TextView
+            android:id="@+id/barLegend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="Activity"
+            android:textAlignment="center" />
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/sessionActivity"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" />
+    </LinearLayout>
+
+</LinearLayout>

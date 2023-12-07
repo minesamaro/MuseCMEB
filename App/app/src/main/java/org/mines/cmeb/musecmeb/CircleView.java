@@ -9,6 +9,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 
+import androidx.core.content.ContextCompat;
+
 public class CircleView extends View {
 
     private final float  MAX_RADIUS = 400;
@@ -23,9 +25,12 @@ public class CircleView extends View {
     }
 
     private void init() {
+        Context context = getContext();
+        int color = ContextCompat.getColor(context, R.color.our_light_blue);
+
         radius = 50; // Default radius
         paint = new Paint();
-        paint.setColor(Color.BLUE); // Set the circle color
+        paint.setColor(color); // Set the circle color
         paint.setStyle(Paint.Style.FILL);
     }
 

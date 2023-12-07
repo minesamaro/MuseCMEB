@@ -60,7 +60,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		values3.put(COLUMN_START_DATE, "2022-02-08" );
 		long rowId3 = db.insert(TABLE_SESSIONS, null, values3);
 
-		Log.d("DatabaseHelper", "Inserted row IDs: " + rowId1 + ", " + rowId2+ ", " + rowId3);
+		ContentValues values4 = new ContentValues();
+		values4.put(COLUMN_STRESS_INDEXES, "6,7,8,9,10,27,35,78,96,45,67,55");
+		values4.put(COLUMN_RELAXATION_TIME, 23.2f);
+		values4.put(COLUMN_START_DATE, "2023-12-06" );
+		long rowId4 = db.insert(TABLE_SESSIONS, null, values4);
+
+		Log.d("DatabaseHelper", "Inserted row IDs: " + rowId1 + ", " + rowId2+ ", " + rowId3 + ", " + rowId4);
 	}
 
 	@Override

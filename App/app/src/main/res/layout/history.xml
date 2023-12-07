@@ -28,7 +28,8 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:title="@string/history">
+        app:title="@string/history"
+        app:titleTextColor="@color/our_dark_blue">
 
     </androidx.appcompat.widget.Toolbar>
 

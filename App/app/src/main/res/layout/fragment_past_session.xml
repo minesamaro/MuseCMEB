@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:paddingLeft="8dp"
     android:paddingRight="8dp"
-    android:background="#83c5be">
+    android:background="@color/our_lighter_blue">
 
     <ImageButton
         android:id="@+id/backButton"
@@ -23,9 +23,10 @@
         android:layout_height="wrap_content"
         android:text="Session 2 - 30/10/2023"
         android:textSize="22sp"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/our_dark_blue"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-medium"/>
 
 
     <com.github.mikephil.charting.charts.LineChart
@@ -42,7 +43,7 @@
         android:layout_height="wrap_content"
         android:text="Time of relaxation: 3 minutes and 23 seconds"
         android:textSize="18sp"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/our_light_blue"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"/>
 </LinearLayout>

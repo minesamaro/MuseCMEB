@@ -23,14 +23,6 @@
             android:layout_height="wrap_content"
             android:src="@android:drawable/btn_star" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/hello_menu"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="2dp" />
-
         <ImageView
             android:id="@+id/startSessionBt"
             android:layout_width="395dp"
@@ -40,8 +32,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView"
-            app:layout_constraintVertical_bias="0.403" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.403"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
