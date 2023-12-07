@@ -24,8 +24,13 @@ public class RelaxationSession implements Serializable {
     }
 
     public int[] getStressIndexes() {
+
+        // epochs of 3 seconds
+        //read eeg 2 seconds and calculate the stress index
+        // mean power_alpha from all samples of 2 seconds
         return stressIndexes;
     }
+
 
     public float getRelaxationTime() {
         return relaxationTime;
