@@ -38,7 +38,7 @@ public class Session extends AppCompatActivity {
         circleView.setPaint(paint);
 
         // Size settings
-        circleView.stressIdxToRadius(50);
+        circleView.stressIdxToRadius(10);
         circleView.startPulsatingAnimation();
 
         Button button = findViewById(R.id.sessionExitBt);

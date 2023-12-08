@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/outerLinearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:background="@color/our_lighter_blue">
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="start"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Back button in the end of session layout"
+        android:src="@drawable/ic_arrow_back" />
+
+    <TextView
+        android:id="@+id/sessionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Session 2 - 30/10/2023"
+        android:textSize="22sp"
+        android:textColor="@color/our_dark_blue"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif-medium"/>
+
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/chart1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_line_chart"
+        android:layout_above="@+id/line_chart" />
+
+
+
+    <TextView
+        android:id="@+id/relaxTimeText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Time of relaxation: 3 minutes and 23 seconds"
+        android:textSize="18sp"
+        android:textColor="@color/our_light_blue"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"/>
+</LinearLayout>
