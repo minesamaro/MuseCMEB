@@ -25,7 +25,7 @@ public class CircularImageView extends androidx.appcompat.widget.AppCompatImageV
         Path path = new Path();
         int width = this.getWidth();
         int height = this.getHeight();
-        path.addCircle(width / 2, height / 2, Math.min(width, height) / 2.5f, Path.Direction.CCW);
+        path.addCircle(width/2, height/2, Math.min(width, height) / 2.5f, Path.Direction.CCW);
         canvas.clipPath(path);
         super.onDraw(canvas);
     }
