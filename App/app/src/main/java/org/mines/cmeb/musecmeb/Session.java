@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import java.security.AccessController;
 import java.util.ArrayList;
@@ -28,6 +30,7 @@ public class Session extends AppCompatActivity {
         // Start the session (save start time) and create array list of indexes
         startDate = new Date();
         dynamicList = new ArrayList<>();
+        addIndex();
 
         CircleView circleView = findViewById(R.id.circleView);
 
@@ -47,7 +50,7 @@ public class Session extends AppCompatActivity {
         button.setOnClickListener(v -> {
             endSession();
             // Here we should start the end of session activity
-            onBackPressed();
+            endOfSessionLayout();
         });
     }
 
@@ -55,7 +58,7 @@ public class Session extends AppCompatActivity {
         // Get time of session
         finishDate = new Date();
         long duration = finishDate.getTime() - startDate.getTime();
-        float durationInMinutes = (float) (duration / 60000.0);
+        relaxationTime = (float) (duration / 60000.0);
 
         // Convert the ArrayList to an array of integers (int[])
         stressIndexes = new int[dynamicList.size()];
@@ -64,9 +67,22 @@ public class Session extends AppCompatActivity {
         }
 
         // Create Relaxation Session Instance to insert in database
-        RelaxationSession session = new RelaxationSession(1, stressIndexes, durationInMinutes, startDate);
+        RelaxationSession session = new RelaxationSession(1, stressIndexes, relaxationTime, startDate);
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         dbHelper.addSession(session);
+    }
+
+    private void endOfSessionLayout(){
+        setContentView(R.layout.end_of_session);
+        ImageButton backBt = findViewById(R.id.backButton);
+
+        TextView sessionTime = findViewById(R.id.sessionTimeTextView);
+        sessionTime.setText(getFormattedTimeOfRelaxation(relaxationTime));
+
+        backBt.setOnClickListener(view -> {
+            onBackPressed();
+        });
+
     }
 
     /**
@@ -81,7 +97,7 @@ public class Session extends AppCompatActivity {
 
     private boolean checkIfRelaxed(){
         int necessaryLength = 4;
-        int stressThreshold = 5;
+        int stressThreshold = 10;
 
         if (dynamicList.size() < necessaryLength) {
             // Not enough values in the list, relaxation cannot be determined
@@ -98,6 +114,14 @@ public class Session extends AppCompatActivity {
         }
         // All values are lower than stressThreshold
         return true;
+    }
+
+    private String getFormattedTimeOfRelaxation(float time){
+        int minutes = (int) time;
+        int seconds = (int) ((time - minutes) * 60);
+
+        // Create a string representation
+        return String.format("%d min %d sec", minutes, seconds);
     }
 
     private int hexToColor(String colorHex) {
