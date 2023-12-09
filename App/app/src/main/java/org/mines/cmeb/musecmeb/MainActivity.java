@@ -31,11 +31,27 @@ public class MainActivity extends AppCompatActivity {
 
         // Change Fragments According to the selected tab
         binding.bottomNavigationView.setOnItemSelectedListener(item-> {
+            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.frame_layout);
             if(item.getItemId()==R.id.profile4) {
                 replaceFragment(new ProfileFragment());
             }
             if(item.getItemId()==R.id.menu3) {
-                replaceFragment(new MenuFragment());
+                if (currentFragment instanceof ProfileFragment) {
+                    // If the current fragment is ProfileFragment, apply the slide in left transition
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.setCustomAnimations(R.anim.slide_in_left, 0);
+                    transaction.replace(R.id.frame_layout, new MenuFragment());
+                    transaction.commit();
+                } else if (currentFragment instanceof HistoryFragment) {
+                    // If the current fragment is HistoryFragment, apply the slide in right transition
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.setCustomAnimations(R.anim.slide_in_right, 0);
+                    transaction.replace(R.id.frame_layout, new MenuFragment());
+                    transaction.commit();
+                } else {
+                    // If the current fragment is not ProfileFragment or HistoryFragment, replace the fragment without any transition
+                    replaceFragment(new MenuFragment());
+                }
             }
             if(item.getItemId()==R.id.history) {
                 replaceFragment(new HistoryFragment());
