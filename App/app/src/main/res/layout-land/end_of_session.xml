@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/outerLinearLayout"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/our_lighter_blue"
     android:orientation="vertical"
     android:paddingLeft="8dp"
-    android:paddingRight="8dp"
-    android:background="#83C5BE">
+    android:paddingRight="8dp">
 
     <ImageButton
         android:id="@+id/backButton"
@@ -22,8 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical"
         android:gravity="center"
+        android:orientation="vertical"
         android:paddingLeft="8dp"
         android:paddingRight="8dp">
 
@@ -33,15 +33,24 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:text="Congratulations, you are relaxed!"
-            android:textSize="22sp"
-            android:textColor="#FFFFFF" />
+            android:textColor="@color/our_dark_blue"
+            android:textSize="22sp" />
 
         <org.mines.cmeb.musecmeb.CircularImageView
             android:id="@+id/happyFaceImageView"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/happy_face"
-            android:layout_marginBottom="10dp" />
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/relax_icon" />
+
+        <TextView
+            android:id="@+id/secondLineTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="Time of relaxation:"
+            android:textColor="@color/our_dark_blue"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/sessionTimeTextView"
@@ -49,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:text="5 min and 34 sec"
-            android:textSize="18sp"
-            android:textColor="#FFFFFF"/>
+            android:textColor="@color/our_pink"
+            android:textSize="22sp" />
     </LinearLayout>
 </LinearLayout>

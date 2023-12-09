@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frameLayout"
@@ -8,64 +8,74 @@
     android:background="@color/our_lighter_blue"
     tools:context=".ProfileFragment">
 
-    <ImageView
-        android:id="@+id/profile_circle"
-        android:layout_width="705dp"
-        android:layout_height="579dp"
-        android:src="@drawable/baseline_circle_24"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.647" />
-
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="328dp"
+        android:layout_width="match_parent"
         android:layout_height="539dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="265dp">
+        android:orientation="vertical">
 
 
         <TextView
             android:id="@+id/userName"
-            android:layout_width="match_parent"
+            android:layout_width="730dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="25dp"
+            android:gravity="center_horizontal"
             android:text="User"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="@color/our_dark_blue" />
 
-        <TextView
-            android:id="@+id/lineLegend"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="60dp"
-            android:text="Time of Relaxation evolution"
-            android:textAlignment="center" />
+        <LinearLayout
+            android:layout_width="730dp"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/indexesChart"
-            android:layout_width="match_parent"
-            android:layout_height="200dp">
+            <LinearLayout
+                android:layout_width="350dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-        </com.github.mikephil.charting.charts.LineChart>
+                <TextView
+                    android:id="@+id/lineLegend"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
 
-        <TextView
-            android:id="@+id/barLegend"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:text="Activity"
-            android:textAlignment="center" />
+                    android:text="Time of Relaxation evolution"
+                    android:textAlignment="center"
+                    android:textColor="@color/our_dark_blue" />
 
-        <com.github.mikephil.charting.charts.BarChart
-            android:id="@+id/sessionActivity"
-            android:layout_width="match_parent"
-            android:layout_height="200dp" />
+                <com.github.mikephil.charting.charts.LineChart
+                    android:id="@+id/indexesChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp">
+
+                </com.github.mikephil.charting.charts.LineChart>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="350dp"
+                android:layout_height="match_parent"
+                android:gravity="right"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/barLegend"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:text="Activity"
+                    android:textAlignment="center"
+                    android:textColor="@color/our_dark_blue" />
+
+                <com.github.mikephil.charting.charts.BarChart
+                    android:id="@+id/sessionActivity"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

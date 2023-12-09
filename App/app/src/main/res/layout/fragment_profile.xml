@@ -15,10 +15,9 @@
         android:src="@drawable/baseline_circle_24"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.647" />
+        app:layout_constraintVertical_bias="0.77" />
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -34,16 +33,20 @@
             android:id="@+id/userName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="25dp"
+            android:layout_marginBottom="35dp"
+            android:layout_marginTop="15dp"
             android:text="User"
             android:textAlignment="center"
+            android:textColor="@color/our_dark_blue"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+
 
         <TextView
             android:id="@+id/lineLegend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="60dp"
+            android:layout_marginBottom="15dp"
+            android:textColor="@color/our_dark_blue"
             android:text="Time of Relaxation evolution"
             android:textAlignment="center" />
 
@@ -58,9 +61,10 @@
             android:id="@+id/barLegend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="15dp"
             android:text="Activity"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="@color/our_dark_blue"/>
 
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/sessionActivity"
