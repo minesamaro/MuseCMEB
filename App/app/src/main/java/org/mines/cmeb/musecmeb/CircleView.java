@@ -13,10 +13,11 @@ import androidx.core.content.ContextCompat;
 
 public class CircleView extends View {
 
-    private final float  MAX_RADIUS = 400;  // probably won't need
-    private final float MIN_RADIUS = 50;   // probably won't need
     private float radius;  // Circle radius for the animation
-    private Paint paint;
+
+    private final float RADIUS = 300f;  // Fixed radius for the circle view
+
+    private Paint paint = new Paint();
     private ValueAnimator pulsatingAnimator;
 
     private int[][] COLORS = {   // Color lookup table
@@ -81,38 +82,19 @@ public class CircleView extends View {
         Context context = getContext();
         int color = ContextCompat.getColor(context, R.color.our_light_blue);
 
-        radius = 50; // Default radius
-        paint = new Paint();
+        //paint = new Paint();
         paint.setColor(color); // Set the circle color
         paint.setStyle(Paint.Style.FILL);
     }
 
-    public void setRadius(float radius) {
+    private void setRadius(float radius) {
         this.radius = radius;
-        this.setupPulsatingAnimation();
         invalidate(); // Redraw the view when the radius changes
     }
-    private void setPaint(Paint paint) {
-        this.paint = paint;
-        this.setupPulsatingAnimation();
+    private void setColor(int color) {
+        this.paint.setColor(color);
         invalidate(); // Redraw the view when the radius changes
     }
-
-    public void setStressIdx(int stressIdx) {
-        stressIdx /= 2;  // integer division will round down, and output an integer (corresponding to the index of the COLORS array)
-
-        // Make sure the index is within the bounds of the array
-        if (stressIdx < 0) {
-            stressIdx = 0;
-        } else if (stressIdx > 49) {
-            stressIdx = 49;
-        }
-
-        int color = Color.rgb(COLORS[stressIdx][0], COLORS[stressIdx][1], COLORS[stressIdx][2]);
-        paint.setColor(color);
-        setPaint(paint);
-    }
-
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -121,11 +103,12 @@ public class CircleView extends View {
         canvas.drawCircle(centerX, centerY, radius, paint);
     }
 
-    private void setupPulsatingAnimation() {
+    public void setupPulsatingAnimation() {
+
         // Define the pulsating animation
-        pulsatingAnimator = ValueAnimator.ofFloat(radius, radius * 1.5f, radius);
-        pulsatingAnimator.setRepeatMode(ValueAnimator.RESTART);
+        pulsatingAnimator = ValueAnimator.ofFloat(RADIUS, RADIUS * 1.5f, RADIUS);
         pulsatingAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        pulsatingAnimator.setRepeatMode(ValueAnimator.RESTART);
         pulsatingAnimator.setInterpolator(new DecelerateInterpolator());
 
         // Duration for each phase of the animation (in ms)
@@ -136,6 +119,23 @@ public class CircleView extends View {
             float animatedValue = (float) animation.getAnimatedValue();
             setRadius(animatedValue);
         });
+
+        // Start the animation
+        startPulsatingAnimation();
+    }
+
+    public void changeColorPulsatingAnimation(int stressIdx){
+        stressIdx /= 2;  // integer division will round down, and output an integer (corresponding to the index of the COLORS array)
+
+        // Make sure the index is within the bounds of the array
+        if (stressIdx < 0) {
+            stressIdx = 0;
+        } else if (stressIdx > 49) {
+            stressIdx = 49;
+        }
+
+        int color = Color.rgb(COLORS[stressIdx][0], COLORS[stressIdx][1], COLORS[stressIdx][2]);
+        setColor(color);
     }
 
     public void startPulsatingAnimation() {

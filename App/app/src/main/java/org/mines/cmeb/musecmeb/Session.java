@@ -6,11 +6,11 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Handler;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import java.security.AccessController;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -34,13 +34,7 @@ public class Session extends AppCompatActivity {
 
         CircleView circleView = findViewById(R.id.circleView);
 
-        // Color settings
-        circleView.setStressIdx(50);
-
-        // Size settings
-        circleView.setRadius(250f);
-        circleView.startPulsatingAnimation();
-
+        circleView.setupPulsatingAnimation();
 
         // Exit button settings
         Button button = findViewById(R.id.sessionExitBt);
@@ -51,6 +45,26 @@ public class Session extends AppCompatActivity {
             // Here we should start the end of session activity
             endOfSessionLayout();
         });
+
+        // Schedule the task to update CircleView every 5 seconds (test responsiveness)
+        testCircleView();
+    }
+
+    private void testCircleView(){
+        Handler handler = new Handler();
+        Runnable updateCircleViewTask = new Runnable() {
+            @Override
+            public void run() {
+                setnewCircleView();
+                handler.postDelayed(this, 3000); // 3 seconds
+            }
+        };
+        handler.postDelayed(updateCircleViewTask, 3000); // Start the task initially
+    }
+    private void setnewCircleView(){
+        CircleView circleView = findViewById(R.id.circleView);
+        int rnd_num = (int) (Math.random() * 101);  // Random number between 0 and 100 (our fake stress index)
+        circleView.changeColorPulsatingAnimation(rnd_num);
     }
 
     private void endSession() {
@@ -70,7 +84,6 @@ public class Session extends AppCompatActivity {
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         dbHelper.addSession(session);
     }
-
     private void endOfSessionLayout(){
         setContentView(R.layout.end_of_session);
         ImageButton backBt = findViewById(R.id.backButton);
