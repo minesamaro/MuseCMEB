@@ -35,15 +35,14 @@ public class Session extends AppCompatActivity {
         CircleView circleView = findViewById(R.id.circleView);
 
         // Color settings
-        Paint paint = new Paint();
-        paint.setColor(hexToColor("#83C5BE"));
-        paint.setStyle(Paint.Style.FILL);
-        circleView.setPaint(paint);
+        circleView.setStressIdx(50);
 
         // Size settings
-        circleView.stressIdxToRadius(10);
+        circleView.setRadius(250f);
         circleView.startPulsatingAnimation();
 
+
+        // Exit button settings
         Button button = findViewById(R.id.sessionExitBt);
         button.setBackgroundColor(hexToColor("#F96E46"));
 

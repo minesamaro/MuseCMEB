@@ -13,11 +13,64 @@ import androidx.core.content.ContextCompat;
 
 public class CircleView extends View {
 
-    private final float  MAX_RADIUS = 400;
-    private final float MIN_RADIUS = 50;
+    private final float  MAX_RADIUS = 400;  // probably won't need
+    private final float MIN_RADIUS = 50;   // probably won't need
     private float radius;  // Circle radius for the animation
     private Paint paint;
     private ValueAnimator pulsatingAnimator;
+
+    private int[][] COLORS = {   // Color lookup table
+            {175, 252, 233},   // 0
+            {173, 250, 229},
+            {171, 249, 224},
+            {170, 247, 219},
+            {169, 246, 214},
+            {168, 244, 209},   // 5
+            {168, 242, 204},
+            {167, 240, 199},
+            {167, 238, 194},
+            {168, 237, 189},
+            {168, 235, 184},   // 10
+            {169, 233, 178},
+            {170, 231, 173},
+            {171, 229, 167},
+            {172, 226, 162},
+            {173, 224, 157},   // 15
+            {175, 222, 151},
+            {176, 220, 146},
+            {178, 217, 140},
+            {180, 215, 135},
+            {182, 212, 130},   // 20
+            {184, 210, 125},
+            {186, 207, 120},
+            {189, 205, 115},
+            {191, 202, 110},
+            {191, 202, 110},    // 25
+            {193, 199, 105},
+            {196, 196, 100},
+            {199, 193, 96},
+            {201, 190, 91},
+            {204, 187, 87},    // 30
+            {206, 184, 83},
+            {209, 180, 79},
+            {212, 177, 76},
+            {215, 174, 73},
+            {217, 170, 70},    // 35
+            {220, 166, 67},
+            {222, 163, 65},
+            {225, 159, 63},
+            {228, 155, 62},
+            {230, 151, 61},   // 40
+            {233, 147, 61},
+            {235, 143, 61},
+            {237, 138, 61},
+            {240, 134, 62},
+            {242, 129, 63},   // 45
+            {244, 125, 64},
+            {246, 120, 66},
+            {247, 115, 68},
+            {249, 110, 70}    // 49
+            };
 
     public CircleView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -34,15 +87,30 @@ public class CircleView extends View {
         paint.setStyle(Paint.Style.FILL);
     }
 
-    private void setRadius(float radius) {
+    public void setRadius(float radius) {
         this.radius = radius;
         this.setupPulsatingAnimation();
         invalidate(); // Redraw the view when the radius changes
     }
-
-    public void setPaint(Paint paint) {
+    private void setPaint(Paint paint) {
         this.paint = paint;
+        this.setupPulsatingAnimation();
         invalidate(); // Redraw the view when the radius changes
+    }
+
+    public void setStressIdx(int stressIdx) {
+        stressIdx /= 2;  // integer division will round down, and output an integer (corresponding to the index of the COLORS array)
+
+        // Make sure the index is within the bounds of the array
+        if (stressIdx < 0) {
+            stressIdx = 0;
+        } else if (stressIdx > 49) {
+            stressIdx = 49;
+        }
+
+        int color = Color.rgb(COLORS[stressIdx][0], COLORS[stressIdx][1], COLORS[stressIdx][2]);
+        paint.setColor(color);
+        setPaint(paint);
     }
 
     @Override
@@ -51,17 +119,6 @@ public class CircleView extends View {
         float centerX = getWidth() / 2f;
         float centerY = getHeight() / 2f;
         canvas.drawCircle(centerX, centerY, radius, paint);
-    }
-
-    public void stressIdxToRadius(double stressIdx) {
-        if (stressIdx >= 100)  // in case the stress index is greater than 100, we set it to the max radius
-            setRadius(MAX_RADIUS);
-        else if (stressIdx <= 10)  // in case the stress index is lower than 10 (changeable), we consider the user  relaxed, and set it to the min radius
-            setRadius(MIN_RADIUS);
-        else {
-            double new_radius = MappingFunctions.lin(stressIdx, 0, 100, MIN_RADIUS, MAX_RADIUS, MIN_RADIUS);
-            setRadius((float) new_radius);
-        }
     }
 
     private void setupPulsatingAnimation() {
