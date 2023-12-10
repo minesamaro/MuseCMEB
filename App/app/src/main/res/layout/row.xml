@@ -9,18 +9,24 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Session" />
+        android:text="Session"
+        android:textColor="@color/our_dark_blue"
+        android:layout_marginBottom="10dp"/>
 
     <TextView
         android:id="@+id/session_id"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:textColor="@color/our_dark_blue"
+        android:layout_marginBottom="10dp"/>
 
     <TextView
         android:id="@+id/start_date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:textColor="@color/our_dark_blue"
+        android:layout_marginBottom="10dp"/>
 
 </LinearLayout>
