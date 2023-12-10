@@ -7,9 +7,8 @@
     tools:context=".MainActivity"
     android:background="@color/our_lighter_blue">
 
-
-    <FrameLayout
-        android:id="@+id/frame_layout"
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
@@ -18,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:background="@color/our_lighter_blue">
 
-    </FrameLayout>
+    </androidx.viewpager.widget.ViewPager>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"

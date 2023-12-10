@@ -11,7 +11,7 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -48,17 +48,21 @@ public class HistoryFragment extends Fragment {
                 // Set the bundle as arguments to the PastSessionFragment
                 pastSessionFragment.setArguments(bundle);
 
-                // Use the FragmentManager to start a FragmentTransaction
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                // Get the MainActivity and the ViewPager
+                MainActivity mainActivity = (MainActivity) getActivity();
+                ViewPager viewPager = mainActivity.findViewById(R.id.viewPager);
 
-                // Replace the current Fragment with the new PastSessionFragment instance
-                transaction.replace(R.id.frame_layout, pastSessionFragment);
+                // Get the ViewPagerAdapter and add the new fragment
+                MainActivity.ViewPagerAdapter adapter = (MainActivity.ViewPagerAdapter) viewPager.getAdapter();
+                adapter.addFragment(pastSessionFragment);
 
-                // Add the transaction to the back stack so the user can navigate back
-                transaction.addToBackStack(null);
-
-                // Commit the transaction
-                transaction.commit();
+                // Navigate to the new fragment without animation
+                viewPager.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        viewPager.setCurrentItem(adapter.getCount() - 1, false);
+                    }
+                });
             }
         });
         return view;
