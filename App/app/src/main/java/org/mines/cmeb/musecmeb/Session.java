@@ -6,11 +6,11 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Handler;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import java.security.AccessController;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -34,16 +34,9 @@ public class Session extends AppCompatActivity {
 
         CircleView circleView = findViewById(R.id.circleView);
 
-        // Color settings
-        Paint paint = new Paint();
-        paint.setColor(hexToColor("#83C5BE"));
-        paint.setStyle(Paint.Style.FILL);
-        circleView.setPaint(paint);
+        circleView.setupPulsatingAnimation();
 
-        // Size settings
-        circleView.stressIdxToRadius(10);
-        circleView.startPulsatingAnimation();
-
+        // Exit button settings
         Button button = findViewById(R.id.sessionExitBt);
         button.setBackgroundColor(hexToColor("#F96E46"));
 
@@ -52,6 +45,26 @@ public class Session extends AppCompatActivity {
             // Here we should start the end of session activity
             endOfSessionLayout();
         });
+
+        // TEST METHOD (comment if not needed)
+        testCircleView();
+    }
+
+    private void testCircleView(){
+        Handler handler = new Handler();
+        Runnable updateCircleViewTask = new Runnable() {
+            @Override
+            public void run() {
+                setnewCircleView();
+                handler.postDelayed(this, 3000); // 3 seconds
+            }
+        };
+        handler.postDelayed(updateCircleViewTask, 3000); // Start the task initially
+    }
+    private void setnewCircleView(){
+        CircleView circleView = findViewById(R.id.circleView);
+        int rnd_num = (int) (Math.random() * 101);  // Random number between 0 and 100 (our fake stress index)
+        circleView.changeColorPulsatingAnimation(rnd_num);
     }
 
     private void endSession() {
@@ -71,7 +84,6 @@ public class Session extends AppCompatActivity {
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         dbHelper.addSession(session);
     }
-
     private void endOfSessionLayout(){
         setContentView(R.layout.end_of_session);
         ImageButton backBt = findViewById(R.id.backButton);

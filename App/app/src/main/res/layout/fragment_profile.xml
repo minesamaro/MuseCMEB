@@ -33,19 +33,20 @@
             android:id="@+id/userName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="35dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="15dp"
-            android:text="User"
+            android:layout_marginBottom="35dp"
+            android:text="John Doe"
             android:textAlignment="center"
-            android:textColor="@color/our_dark_blue"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textColor="@color/our_dark_blue" />
 
 
         <TextView
             android:id="@+id/lineLegend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="10dp"
             android:textColor="@color/our_dark_blue"
             android:text="Time of Relaxation evolution"
             android:textAlignment="center" />
@@ -53,7 +54,7 @@
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/indexesChart"
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="190dp">
 
         </com.github.mikephil.charting.charts.LineChart>
 
@@ -61,7 +62,7 @@
             android:id="@+id/barLegend"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:text="Activity"
             android:textAlignment="center"
             android:textColor="@color/our_dark_blue"/>
@@ -69,7 +70,7 @@
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/sessionActivity"
             android:layout_width="match_parent"
-            android:layout_height="200dp" />
+            android:layout_height="190dp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
