@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.viewpager.widget.ViewPager;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
@@ -124,8 +125,12 @@ public class PastSessionFragment extends Fragment{
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Get the MainActivity and the ViewPager
+                MainActivity mainActivity = (MainActivity) getActivity();
+                ViewPager viewPager = mainActivity.findViewById(R.id.viewPager);
 
-                replaceFragment(new HistoryFragment());
+                // Navigate to HistoryFragment
+                viewPager.setCurrentItem(0); // Assuming HistoryFragment is at position 0
             }
         });
 
@@ -150,12 +155,6 @@ public class PastSessionFragment extends Fragment{
         return dataVal;
     }
 
-    private void replaceFragment (Fragment fragment){
-        FragmentManager fragmentManager= getParentFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.frame_layout,fragment)
-                .commit();
-    }
 
     private String getFormattedDate(Date date){
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
