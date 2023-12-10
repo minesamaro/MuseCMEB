@@ -46,7 +46,7 @@ public class Session extends AppCompatActivity {
             endOfSessionLayout();
         });
 
-        // Schedule the task to update CircleView every 5 seconds (test responsiveness)
+        // TEST METHOD (comment if not needed)
         testCircleView();
     }
 
