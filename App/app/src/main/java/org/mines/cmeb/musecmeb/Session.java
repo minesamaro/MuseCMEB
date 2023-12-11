@@ -20,6 +20,8 @@ public class Session extends AppCompatActivity {
     private float relaxationTime;
     private Date startDate;
     private Date finishDate;
+    Runnable updateCircleViewTask;
+    Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +53,8 @@ public class Session extends AppCompatActivity {
     }
 
     private void testCircleView(){
-        Handler handler = new Handler();
-        Runnable updateCircleViewTask = new Runnable() {
+        handler = new Handler();
+        updateCircleViewTask = new Runnable() {
             @Override
             public void run() {
                 setnewCircleView();
@@ -68,6 +70,9 @@ public class Session extends AppCompatActivity {
     }
 
     private void endSession() {
+        // Stop running of updating Circle
+        handler.removeCallbacks(updateCircleViewTask);
+
         // Get time of session
         finishDate = new Date();
         long duration = finishDate.getTime() - startDate.getTime();
