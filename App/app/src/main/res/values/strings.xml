@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MindFlow</string>
+    <string name="app_name">BreatheBud</string>
     <string name="history"> History </string>
     <string name="sessionButton"> Exit </string>
     <string name="back_button_description"> Back Button in the history view layout </string>
@@ -11,4 +11,16 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="app_widget_description">This is an app widget description</string>
+    <string name="refresh">Refresh</string>
+    <string name="connect">Connect</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="status">Connection Status</string>
+    <string name="undefined">unknown</string>
+    <string name="eeg">EEG data</string>
+    <string name="init_val">0</string>
+    <string name="version">Version</string>
+    <string name="pause">Pause</string>
+    <string name="permission_dialog_title">Muse Needs Your Permission</string>
+    <string name="permission_dialog_description">Muse needs a few permissions to work properly. On the next screens, tap "Allow" to proceed. If you deny, Muse will not work properly until you go into your Android settings and allow.</string>
+    <string name="permission_dialog_understand">I Understand</string>
 </resources>

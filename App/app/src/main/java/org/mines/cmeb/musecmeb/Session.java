@@ -1,27 +1,28 @@
 package org.mines.cmeb.musecmeb;
 
-import static java.security.AccessController.getContext;
 
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 public class Session extends AppCompatActivity {
-    private int[] stressIndexes;
     ArrayList<Integer> dynamicList;
     private float relaxationTime;
     private Date startDate;
-    private Date finishDate;
     Runnable updateCircleViewTask;
     Handler handler;
+    private double stressIndex;
+    private int parsedStressIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,15 +33,16 @@ public class Session extends AppCompatActivity {
         // Start the session (save start time) and create array list of indexes
         startDate = new Date();
         dynamicList = new ArrayList<>();
-        addIndex();
 
         CircleView circleView = findViewById(R.id.circleView);
 
         circleView.setupPulsatingAnimation();
 
+
+
         // Exit button settings
         Button button = findViewById(R.id.sessionExitBt);
-        button.setBackgroundColor(hexToColor("#F96E46"));
+        button.setBackgroundColor(Color.parseColor("#F96E46"));
 
         button.setOnClickListener(v -> {
             endSession();
@@ -49,7 +51,30 @@ public class Session extends AppCompatActivity {
         });
 
         // TEST METHOD (comment if not needed)
-        testCircleView();
+        //testCircleView();
+
+        // TEST for LibTest
+        acquireData();
+    }
+
+
+    private void acquireData(){
+        handler = new Handler();
+        updateCircleViewTask = new Runnable() {
+            @Override
+            public void run() {
+                setNewerCircleView();
+                if(checkIfRelaxed())
+                {
+                    endSession();
+                    endOfSessionLayout();
+                }
+                else {
+                    handler.postDelayed(this, 1000); // 3 seconds
+                }
+            }
+        };
+        handler.postDelayed(updateCircleViewTask, 1000); // Start the task initially
     }
 
     private void testCircleView(){
@@ -57,13 +82,26 @@ public class Session extends AppCompatActivity {
         updateCircleViewTask = new Runnable() {
             @Override
             public void run() {
-                setnewCircleView();
+                setNewCircleView();
                 handler.postDelayed(this, 3000); // 3 seconds
             }
         };
         handler.postDelayed(updateCircleViewTask, 3000); // Start the task initially
     }
-    private void setnewCircleView(){
+    private void setNewerCircleView(){
+        CircleView circleView = findViewById(R.id.circleView);
+
+        // Start the data acquisition service
+        stressIndex = ((GlobalMuse) this.getApplication()).getMomentStressIndex();
+        Log.i("StressIdx", String.valueOf(stressIndex));
+
+        parsedStressIndex = MappingFunctions.lin(stressIndex);
+        Log.i("parsedStressIdx", String.valueOf(parsedStressIndex));
+
+        circleView.changeColorPulsatingAnimation(parsedStressIndex);
+        addIndex(parsedStressIndex);
+    }
+    private void setNewCircleView(){
         CircleView circleView = findViewById(R.id.circleView);
         int rnd_num = (int) (Math.random() * 101);  // Random number between 0 and 100 (our fake stress index)
         circleView.changeColorPulsatingAnimation(rnd_num);
@@ -74,20 +112,21 @@ public class Session extends AppCompatActivity {
         handler.removeCallbacks(updateCircleViewTask);
 
         // Get time of session
-        finishDate = new Date();
+        Date finishDate = new Date();
         long duration = finishDate.getTime() - startDate.getTime();
         relaxationTime = (float) (duration / 60000.0);
 
         // Convert the ArrayList to an array of integers (int[])
-        stressIndexes = new int[dynamicList.size()];
+        int[] stressIndexes = new int[dynamicList.size()];
         for (int i = 0; i < dynamicList.size(); i++) {
             stressIndexes[i] = dynamicList.get(i);
         }
 
         // Create Relaxation Session Instance to insert in database
         RelaxationSession session = new RelaxationSession(1, stressIndexes, relaxationTime, startDate);
-        DatabaseHelper dbHelper = new DatabaseHelper(this);
-        dbHelper.addSession(session);
+        try (DatabaseHelper dbHelper = new DatabaseHelper(this)) {
+            dbHelper.addSession(session);
+        }
     }
     private void endOfSessionLayout(){
         setContentView(R.layout.end_of_session);
@@ -96,36 +135,32 @@ public class Session extends AppCompatActivity {
         TextView sessionTime = findViewById(R.id.sessionTimeTextView);
         sessionTime.setText(getFormattedTimeOfRelaxation(relaxationTime));
 
-        backBt.setOnClickListener(view -> {
-            onBackPressed();
-        });
+        backBt.setOnClickListener(view -> onBackPressed());
 
     }
 
     /**
-     * Add index from data acquition to the session indexes
+     * Add index from data acquisition to the session indexes
      */
-    private void addIndex(){
+    private void addIndex(int index){
         // Receive integer index from Data Acquisition and store it in the array list
         // Change this line to the method for getting
-        int index = 15;
         dynamicList.add(index);
     }
 
     private boolean checkIfRelaxed(){
-        int necessaryLength = 4;
-        int stressThreshold = 10;
+        int necessaryLength = 20;
+        int stressThreshold = 20;
 
         if (dynamicList.size() < necessaryLength) {
             // Not enough values in the list, relaxation cannot be determined
             return false;
         }
 
-        // Check the last necessaryLength values
+        // Check the last necessaryLength values consecutively
         for (int i = dynamicList.size() - necessaryLength; i < dynamicList.size(); i++) {
-            int value = dynamicList.get(i);
-            if (value >= stressThreshold) {
-                // If any value is greater than or equal to stressThreshold, return false
+            if (dynamicList.get(i) > stressThreshold) {
+                // At least one value is higher than stressThreshold
                 return false;
             }
         }
@@ -138,10 +173,6 @@ public class Session extends AppCompatActivity {
         int seconds = (int) ((time - minutes) * 60);
 
         // Create a string representation
-        return String.format("%d min %d sec", minutes, seconds);
-    }
-
-    private int hexToColor(String colorHex) {
-        return Color.parseColor(colorHex);
+        return String.format(Locale.getDefault(),"%d min %d sec", minutes, seconds);
     }
 }

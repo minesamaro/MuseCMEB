@@ -43,30 +43,47 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		db.execSQL(createTableQuery);
 
 		ContentValues values = new ContentValues();
-		values.put(COLUMN_STRESS_INDEXES, "1,2,3,4,5");
-		values.put(COLUMN_RELAXATION_TIME, 20.5f);
-		values.put(COLUMN_START_DATE, "2022-01-01");
+		values.put(COLUMN_STRESS_INDEXES, "100,62,62,62,62,62,53,53,53,53,53,57,57,57,57,57,43,43,43,43,43,36,36,36,36,36,44,44,44,44,44,44,53,53,53,53,53,54,54,54,54,54,54,54");
+		values.put(COLUMN_RELAXATION_TIME, 5.5f);
+		values.put(COLUMN_START_DATE, "2023-12-04");
 		long rowId1 = db.insert(TABLE_SESSIONS, null, values);
 
 		ContentValues values2 = new ContentValues();
-		values2.put(COLUMN_STRESS_INDEXES, "4,2,7,4,5");
-		values2.put(COLUMN_RELAXATION_TIME, 18.5f);
-		values2.put(COLUMN_START_DATE, "2022-02-05");
+		values2.put(COLUMN_STRESS_INDEXES, "100,62,62,62,62,62,53,53,53,53,53,57,57,57,57,57,43,43,43,43,43,36,36,36,36,36,44,44,44,44,44,44,53,53,53,53,53,54,54,54,54,54,54,54");
+		values2.put(COLUMN_RELAXATION_TIME, 9.5f);
+		values2.put(COLUMN_START_DATE, "2023-12-05");
 		long rowId2 = db.insert(TABLE_SESSIONS, null, values2);
 
 		ContentValues values3 = new ContentValues();
-		values3.put(COLUMN_STRESS_INDEXES, "6,7,8,9,10");
-		values3.put(COLUMN_RELAXATION_TIME, 47.2f);
-		values3.put(COLUMN_START_DATE, "2022-02-08" );
+		values3.put(COLUMN_STRESS_INDEXES, "100,62,62,62,62,62,53,53,53,53,53,57,57,57,57,57,43,43,43,43,43,36,36,36,36,36,44,44,44,44,44,44,53,53,53,53,53,54,54,54,54,54,54,54");
+		values3.put(COLUMN_RELAXATION_TIME, 7.2f);
+		values3.put(COLUMN_START_DATE, "2023-12-06" );
 		long rowId3 = db.insert(TABLE_SESSIONS, null, values3);
 
 		ContentValues values4 = new ContentValues();
-		values4.put(COLUMN_STRESS_INDEXES, "6,7,8,9,10,27,35,78,96,45,67,55");
-		values4.put(COLUMN_RELAXATION_TIME, 23.2f);
-		values4.put(COLUMN_START_DATE, "2023-12-06" );
+		values4.put(COLUMN_STRESS_INDEXES, "100,62,62,62,62,62,53,53,53,53,53,57,57,57,57,57,43,43,43,43,43,36,36,36,36,36,44,44,44,44,44,44,53,53,53,53,53,54,54,54,54,54,54,54");
+		values4.put(COLUMN_RELAXATION_TIME, 2.23f);
+		values4.put(COLUMN_START_DATE, "2023-12-07" );
 		long rowId4 = db.insert(TABLE_SESSIONS, null, values4);
 
-		Log.d("DatabaseHelper", "Inserted row IDs: " + rowId1 + ", " + rowId2+ ", " + rowId3 + ", " + rowId4);
+		ContentValues values5 = new ContentValues();
+		values5.put(COLUMN_STRESS_INDEXES, "100,62,62,62,62,62,53,53,53,53,53,57,57,57,57,57,43,43,43,43,43,36,36,36,36,36,44,44,44,44,44,44,53,53,53,53,53,54,54,54,54,54,54,54");
+		values5.put(COLUMN_RELAXATION_TIME, 0.74f);
+		values5.put(COLUMN_START_DATE, "2023-12-10" );
+		long rowId5 = db.insert(TABLE_SESSIONS, null, values5);
+
+		ContentValues values6 = new ContentValues();
+		values6.put(COLUMN_STRESS_INDEXES, "100,62,62,62,62,62,53,53,53,53,53,57,57,57,57,57,43,43,43,43,43,36,36,36,36,36,44,44,44,44,44,44,53,53,53,53,53,54,54,54,54,54,54,54");
+		values6.put(COLUMN_RELAXATION_TIME, 2.74f);
+		values6.put(COLUMN_START_DATE, "2023-12-11" );
+		long rowId6 = db.insert(TABLE_SESSIONS, null, values6);
+
+		ContentValues values7 = new ContentValues();
+		values7.put(COLUMN_STRESS_INDEXES, "100,62,62,62,62,62,53,53,53,53,53,57,57,57,57,57,43,43,43,43,43,36,36,36,36,36,44,44,44,44,44,44,53,53,53,53,53,54,54,54,54,54,54,54");
+		values7.put(COLUMN_RELAXATION_TIME, 3.74f);
+		values7.put(COLUMN_START_DATE, "2023-12-11" );
+		long rowId7 = db.insert(TABLE_SESSIONS, null, values7);
+
 	}
 
 	@Override

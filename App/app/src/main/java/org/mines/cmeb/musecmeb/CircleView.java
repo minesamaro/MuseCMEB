@@ -112,7 +112,7 @@ public class CircleView extends View {
         pulsatingAnimator.setInterpolator(new DecelerateInterpolator());
 
         // Duration for each phase of the animation (in ms)
-        pulsatingAnimator.setDuration(10_000); // Adjust the duration as needed (here 10 seconds)
+        pulsatingAnimator.setDuration(12_000); // Adjust the duration as needed (here 10 seconds)
 
         // Update the radius during the animation
         pulsatingAnimator.addUpdateListener(animation -> {

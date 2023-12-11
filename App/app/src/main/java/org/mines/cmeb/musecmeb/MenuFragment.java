@@ -74,6 +74,12 @@ public class MenuFragment extends Fragment {
             startActivity(intent);
         });
 
+        ImageButton connectBt = view.findViewById(R.id.imageButton2);
+        connectBt.setOnClickListener(view1 -> {
+            Intent intent = new Intent(getActivity(), LibTest.class);
+            startActivity(intent);
+        });
+
         // Inflate the layout for this fragment
         return view;
     }

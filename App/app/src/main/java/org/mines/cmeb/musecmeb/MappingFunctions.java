@@ -7,8 +7,8 @@ public class MappingFunctions {
         return (range/(1+Math.exp(-(mult*x-hor_shift)))) + vert_shift;
     }
     // Returns the sigmoid value, with the parameters we discussed
-    public static double sigmoid(double x){
-        return (100/(1+Math.exp(-(5*x-5))));
+    public static int sigmoid(double x){
+        return (int) (100/(1+Math.exp(-(5*x-5))));
     }
 
     // Linear mapping function (caps at max_y and min_y)
@@ -22,12 +22,12 @@ public class MappingFunctions {
             return Math.max(result, min_y);
     }
     // Same thing as before, but for the linear case
-    public static double lin(double x){
-        double result = 50 * x;
+    public static int lin(double x){
+        double result = 100 * x;
 
         if (result > 100)
             return 100;
         else
-            return Math.max(result, 0);
+            return (int) Math.max(result, 0);
     }
 }
