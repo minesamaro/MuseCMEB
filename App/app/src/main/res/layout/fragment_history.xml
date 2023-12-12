@@ -47,7 +47,8 @@
             android:drawSelectorOnTop="false"
 
             android:paddingHorizontal="5dp"
-            android:paddingVertical="10dp">
+            android:paddingVertical="10dp"
+            android:paddingStart="20dp">
 
         </ListView>
 

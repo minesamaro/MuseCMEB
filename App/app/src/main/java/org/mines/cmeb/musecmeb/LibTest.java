@@ -52,6 +52,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.bluetooth.BluetoothAdapter;
@@ -578,6 +579,9 @@ public class LibTest extends Activity implements OnClickListener {
         spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
         Spinner musesSpinner = findViewById(R.id.muses_spinner);
         musesSpinner.setAdapter(spinnerAdapter);
+
+        ImageButton backBt = findViewById(R.id.backButton);
+        backBt.setOnClickListener(view -> onBackPressed());
     }
 
     /**

@@ -81,7 +81,7 @@ public class PastSessionFragment extends Fragment{
 
 
         // Line Chart Definitions and settings
-        LineDataSet lineDataSet1 = new LineDataSet(dataValues(), "Data Set 1");
+        LineDataSet lineDataSet1 = new LineDataSet(dataValues(), "Stress Index over time");
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(lineDataSet1);
 

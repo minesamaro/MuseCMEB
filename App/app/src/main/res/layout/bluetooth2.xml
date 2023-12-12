@@ -6,6 +6,15 @@
     android:orientation="vertical"
     android:padding="20dp">
 
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="start"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Back button in the end of session layout"
+        android:src="@drawable/ic_arrow_back" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
