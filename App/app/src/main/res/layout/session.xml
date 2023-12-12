@@ -1,24 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background = "#EDF6F9">  <!-- Background color; circle and button colors are set in Session.java -->
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#EDF6F9">
 
     <!-- CircleView -->
     <org.mines.cmeb.musecmeb.CircleView
         android:id="@+id/circleView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerInParent="true" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Button -->
     <Button
         android:id="@+id/sessionExitBt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/sessionButton"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp" />
-</RelativeLayout>
+        android:layout_marginEnd="16dp"
+        android:text="@string/sessionButton" />
+
+    <!-- ImageView at the bottom -->
+    <ImageView
+        android:id="@+id/gradient"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:rotation="90"
+        android:scaleType="fitCenter"
+        android:scaleX="0.5"
+        android:scaleY="0.4"
+        android:src="@drawable/gradient"
+        android:translationY="-30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/circleView" />
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="textEnd"
+        android:translationY="-65dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/circleView">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="40dp"
+            android:text="0" />
+
+        <Space
+            android:id="@+id/space"
+            android:layout_width="290dp"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/textView2" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/space"
+            android:paddingStart="20dp"
+            android:text="100" />
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
