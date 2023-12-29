@@ -17,7 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -36,7 +35,6 @@ import com.github.mikephil.charting.utils.ViewPortHandler;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-
 
 import kotlin.collections.IndexedValue;
 
@@ -64,7 +62,6 @@ public class PastSessionFragment extends Fragment{
         relaxTimeText = view.findViewById(R.id.relaxTimeText);
         sessionChart = (LineChart) view.findViewById(R.id.chart1);
 
-
         // Retrieve session id  from the bundle
         Bundle bundle = getArguments();
         if (bundle != null) {
@@ -73,12 +70,11 @@ public class PastSessionFragment extends Fragment{
             sessionId = session.getId();
             relaxationTime = session.getRelaxationTime();
             startDate = session.getStartDate();
-            }
+        }
 
         Context context = getContext();
         int light_blue = ContextCompat.getColor(context, R.color.our_light_blue);
         int pink = ContextCompat.getColor(context, R.color.our_pink);
-
 
         // Line Chart Definitions and settings
         LineDataSet lineDataSet1 = new LineDataSet(dataValues(), "Stress Index over time");
@@ -120,20 +116,21 @@ public class PastSessionFragment extends Fragment{
         sessionChart.setData(data);
         sessionChart.invalidate();
 
-
         // Set a click listener for the back button
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Get the MainActivity and the ViewPager
-                MainActivity mainActivity = (MainActivity) getActivity();
-                ViewPager viewPager = mainActivity.findViewById(R.id.viewPager);
+                // Pop the back stack to return to the previous fragment
+                getFragmentManager().popBackStack();
 
-                // Navigate to HistoryFragment
-                viewPager.setCurrentItem(0); // Assuming HistoryFragment is at position 0
+                // Get the MainActivity
+                MainActivity mainActivity = (MainActivity) getActivity();
+
+                // Make the ViewPager visible and the FrameLayout invisible
+                mainActivity.getViewPager().setVisibility(View.VISIBLE);
+                mainActivity.getFrameLayout().setVisibility(View.GONE);
             }
         });
-
 
         String title = "Session "+ String.valueOf(sessionId)
                 + " - " + getFormattedDate(startDate);
@@ -155,7 +152,6 @@ public class PastSessionFragment extends Fragment{
         return dataVal;
     }
 
-
     private String getFormattedDate(Date date){
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -170,6 +166,4 @@ public class PastSessionFragment extends Fragment{
         // Create a string representation
         return String.format("%d min %d sec", minutes, seconds);
     }
-
-
 }

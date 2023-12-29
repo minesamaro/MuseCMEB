@@ -8,6 +8,8 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.FrameLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     ViewPager viewPager;
     ViewPagerAdapter viewPagerAdapter;
+    FrameLayout frameLayout; // Add this line
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        // Initialize the FrameLayout
+        frameLayout = findViewById(R.id.frame_layout); // Add this line
 
         // Set up ViewPager with FragmentPagerAdapter
         viewPager = findViewById(R.id.viewPager);
@@ -61,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Change Fragments According to the selected tab
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
+
+            viewPager.setVisibility(View.VISIBLE);
+            frameLayout.setVisibility(View.GONE);
             if (item.getItemId() == R.id.profile4) {
                 viewPager.setCurrentItem(2);
             } else if (item.getItemId() == R.id.menu3) {
@@ -71,6 +80,16 @@ public class MainActivity extends AppCompatActivity {
 
             return false;
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (frameLayout.getVisibility() == View.VISIBLE) {
+            viewPager.setVisibility(View.VISIBLE);
+            frameLayout.setVisibility(View.GONE);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     public class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -94,9 +113,29 @@ public class MainActivity extends AppCompatActivity {
             return fragmentList.size();
         }
 
-        public void addFragment(Fragment fragment) {
-            fragmentList.add(fragment);
+        public void replaceFragment(int position, Fragment fragment) {
+            fragmentList.set(position, fragment);
             notifyDataSetChanged();
         }
+
+        @Override
+        public int getItemPosition(@NonNull Object object) {
+            int index = fragmentList.indexOf(object);
+            if (index == -1) {
+                return POSITION_NONE;
+            } else {
+                return index;
+            }
+        }
+    }
+
+    // Getter method for the FrameLayout
+    public FrameLayout getFrameLayout() {
+        return frameLayout;
+    }
+
+    // Getter method for the ViewPager
+    public ViewPager getViewPager() {
+        return viewPager;
     }
 }
