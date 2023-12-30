@@ -41,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         viewPager.setAdapter(viewPagerAdapter);
 
+        //Set Offscreen page limit of 2 pages, to ensure faster transition between pages
+        viewPager.setOffscreenPageLimit(2);
+
         // Set initial page to MenuFragment
         viewPager.setCurrentItem(1);
 
