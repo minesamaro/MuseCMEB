@@ -120,7 +120,7 @@ public class PastSessionFragment extends Fragment{
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Pop the back stack to return to the previous fragment
+                // Removes the top fragment from the stack and displays the previous one
                 getFragmentManager().popBackStack();
 
                 // Get the MainActivity

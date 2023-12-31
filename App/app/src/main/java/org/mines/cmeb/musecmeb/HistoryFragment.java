@@ -17,7 +17,9 @@ import java.util.List;
 
 public class HistoryFragment extends Fragment {
 
+    // ListView to display the relaxation sessions
     private ListView listView;
+    // List of relaxation sessions
     private List<RelaxationSession> sessions;
 
     public HistoryFragment() {
@@ -30,7 +32,9 @@ public class HistoryFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_history, container, false);
 
+        // Initialize the ListView
         listView = view.findViewById(android.R.id.list);
+        // Display the relaxation sessions in the ListView
         displayData();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -69,8 +73,11 @@ public class HistoryFragment extends Fragment {
         return view;
     }
 
+    // Method to display the relaxation sessions in the ListView
     private void displayData() {
+        // Create a DatabaseHelper
         DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+        // Get all relaxation sessions from the database
         sessions = dbHelper.getAllRelaxationSessions();
 
         // Sort the sessions in descending order of startDate
