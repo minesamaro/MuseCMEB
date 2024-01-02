@@ -76,7 +76,7 @@ public class MenuFragment extends Fragment {
 
         ImageButton connectBt = view.findViewById(R.id.imageButton2);
         connectBt.setOnClickListener(view1 -> {
-            Intent intent = new Intent(getActivity(), LibTest.class);
+            Intent intent = new Intent(getActivity(), SettingsMenu.class); // changed
             startActivity(intent);
         });
 

@@ -53,14 +53,19 @@
             android:parentActivityName=".Session">
         </activity>
         <activity
-            android:name=".ConnectionBluetooth"
+            android:name=".SettingsMenu"
             android:exported="true"
             android:parentActivityName=".MainActivity">
         </activity>
         <activity
             android:name=".LibTest"
             android:exported="true"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".SettingsMenu">
+        </activity>
+        <activity
+            android:name=".MusicOptions"
+            android:exported="true"
+            android:parentActivityName=".SettingsMenu">
         </activity>
     </application>
 
