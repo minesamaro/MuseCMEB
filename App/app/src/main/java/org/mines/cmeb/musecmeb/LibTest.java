@@ -53,6 +53,7 @@ import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.bluetooth.BluetoothAdapter;
@@ -291,6 +292,7 @@ public class LibTest extends Activity implements OnClickListener {
 
                 // Initiate a connection to the headband and stream the data asynchronously.
                 muse.runAsynchronously();
+                ((GlobalMuse) getApplication()).setConnectedMuse(muse);
             }
 
         } else if (v.getId() == R.id.disconnect) {
@@ -299,6 +301,8 @@ public class LibTest extends Activity implements OnClickListener {
             // Disconnect from the selected Muse.
             if (muse != null) {
                 muse.disconnect();
+                ((GlobalMuse) getApplication()).setConnectedMuse(null);
+                setAllVerifiedDark();
             }
 
         } else if (v.getId() == R.id.pause) {
@@ -405,8 +409,14 @@ public class LibTest extends Activity implements OnClickListener {
                         + museVersion.getFirmwareVersion() + " - "
                         + museVersion.getProtocolVersion();
                 museVersionText.setText(version);
+
             } else {
                 museVersionText.setText(R.string.undefined);
+                ((GlobalMuse) getApplication()).setConnectedMuse(null);
+                setAllVerifiedDark();
+                museVersionText.setVisibility(View.INVISIBLE);
+                TextView museVersionLabel = findViewById(R.id.version_label);
+                museVersionLabel.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -596,10 +606,7 @@ public class LibTest extends Activity implements OnClickListener {
     private final Runnable tickUi = new Runnable() {
         @Override
         public void run() {
-            if (eegStale) {
-                updateEeg();
-            }
-            if (accelStale) {
+            if (betaAbsStale) {
                 updateBeta();
             }
             if (alphaStale) {
@@ -614,26 +621,36 @@ public class LibTest extends Activity implements OnClickListener {
      * from the buffers.
      */
     private void updateBeta() {
-        TextView elem = findViewById(R.id.elem);
-        TextView elem5 = findViewById(R.id.elem5);
-        TextView elem6 = findViewById(R.id.elem6);
-        TextView elem7 = findViewById(R.id.elem7);
-        elem.setText(String.format(Locale.getDefault(), "%6.2f", betaAbsBuffer[0]));
-        elem5.setText(String.format(Locale.getDefault(), "%6.2f", betaAbsBuffer[1]));
-        elem6.setText(String.format(Locale.getDefault(), "%6.2f", betaAbsBuffer[2]));
-        elem7.setText(String.format(Locale.getDefault(), "%6.2f", betaAbsBuffer[2]));
+        if (betaAbsBuffer[0] != 0){
+            ImageView img = findViewById(R.id.ch1Status);
+            img.setImageResource(R.drawable.verified);
+        } else {
+            ImageView img = findViewById(R.id.ch1Status);
+            img.setImageResource(R.drawable.verified_dark);
+        }
+        if (betaAbsBuffer[1] != 0){
+            ImageView img = findViewById(R.id.ch2Status);
+            img.setImageResource(R.drawable.verified);
+        } else {
+            ImageView img = findViewById(R.id.ch2Status);
+            img.setImageResource(R.drawable.verified_dark);
+        }
+        if (betaAbsBuffer[2] != 0){
+            ImageView img = findViewById(R.id.ch3Status);
+            img.setImageResource(R.drawable.verified);
+        } else {
+            ImageView img = findViewById(R.id.ch3Status);
+            img.setImageResource(R.drawable.verified_dark);
+        }
+        if (alphaAbsBuffer[3] != 0){
+            ImageView img = findViewById(R.id.ch4Status);
+            img.setImageResource(R.drawable.verified);
+        } else {
+            ImageView img = findViewById(R.id.ch4Status);
+            img.setImageResource(R.drawable.verified_dark);
+        }
     }
 
-    private void updateEeg() {
-        TextView tp9 = findViewById(R.id.eeg_tp9);
-        TextView fp1 = findViewById(R.id.eeg_af7);
-        TextView fp2 = findViewById(R.id.eeg_af8);
-        TextView tp10 = findViewById(R.id.eeg_tp10);
-        tp9.setText(String.format(Locale.getDefault(), "%6.2f", eegBuffer[0]));
-        fp1.setText(String.format(Locale.getDefault(), "%6.2f", eegBuffer[1]));
-        fp2.setText(String.format(Locale.getDefault(), "%6.2f", eegBuffer[2]));
-        tp10.setText(String.format(Locale.getDefault(), "%6.2f", eegBuffer[3]));
-    }
 
     //public static double averagePower(double[] MeanChannel) {
     //  return Arrays.stream(MeanChannel).average().orElse(Double.NaN);
@@ -649,14 +666,34 @@ public class LibTest extends Activity implements OnClickListener {
     }
 
     private void updateAlpha() {
-        TextView elem1 = findViewById(R.id.elem1);
-        elem1.setText(String.format(Locale.getDefault(), "%6.2f", alphaAbsBuffer[0]));
-        TextView elem2 = findViewById(R.id.elem2);
-        elem2.setText(String.format(Locale.getDefault(), "%6.2f", alphaAbsBuffer[1]));
-        TextView elem3 = findViewById(R.id.elem3);
-        elem3.setText(String.format(Locale.getDefault(), "%6.2f", alphaAbsBuffer[2]));
-        TextView elem4 = findViewById(R.id.elem4);
-        elem4.setText(String.format(Locale.getDefault(), "%6.2f", alphaAbsBuffer[3]));
+        if (alphaAbsBuffer[0] != 0){
+            ImageView img = findViewById(R.id.ch1Status);
+            img.setImageResource(R.drawable.verified);
+        } else {
+            ImageView img = findViewById(R.id.ch1Status);
+            img.setImageResource(R.drawable.verified_dark);
+        }
+        if (alphaAbsBuffer[1] != 0){
+            ImageView img = findViewById(R.id.ch2Status);
+            img.setImageResource(R.drawable.verified);
+        } else {
+            ImageView img = findViewById(R.id.ch2Status);
+            img.setImageResource(R.drawable.verified_dark);
+        }
+        if (alphaAbsBuffer[2] != 0){
+            ImageView img = findViewById(R.id.ch3Status);
+            img.setImageResource(R.drawable.verified);
+        } else {
+            ImageView img = findViewById(R.id.ch3Status);
+            img.setImageResource(R.drawable.verified_dark);
+        }
+        if (alphaAbsBuffer[3] != 0){
+            ImageView img = findViewById(R.id.ch4Status);
+            img.setImageResource(R.drawable.verified);
+        } else {
+            ImageView img = findViewById(R.id.ch4Status);
+            img.setImageResource(R.drawable.verified_dark);
+        }
     }
     private void meanPower(){
         meanAlpha = averagePower(alphaTimeBuffer);
@@ -678,7 +715,16 @@ public class LibTest extends Activity implements OnClickListener {
             Log.i("mental state", "stressed");
         }
     }
-
+    private void setAllVerifiedDark(){
+        ImageView img = findViewById(R.id.ch1Status);
+        img.setImageResource(R.drawable.verified_dark);
+        ImageView img2 = findViewById(R.id.ch2Status);
+        img2.setImageResource(R.drawable.verified_dark);
+        ImageView img3 = findViewById(R.id.ch3Status);
+        img3.setImageResource(R.drawable.verified_dark);
+        ImageView img4 = findViewById(R.id.ch4Status);
+        img4.setImageResource(R.drawable.verified_dark);
+    }
 
     //--------------------------------------
     // File I/O

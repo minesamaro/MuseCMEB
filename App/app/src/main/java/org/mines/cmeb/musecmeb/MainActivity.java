@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
         // Initialize the database helper
         DatabaseHelper databaseHelper = new DatabaseHelper(this);
 
+        ((GlobalMuse) getApplication()).setConnectedMuse(null);
+
         // Inflate the layout for this activity
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

@@ -44,6 +44,7 @@
         app:layout_constraintTop_toBottomOf="@id/circleView" />
 
     <RelativeLayout
+        android:id="@+id/gradientVis"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textAlignment="textEnd"

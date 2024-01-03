@@ -21,4 +21,7 @@ public class GlobalMuse extends Application {
     public double getMomentStressIndex() {
         return momentStressIndex;
     }
+    public boolean MuseConnected() {
+        return connectedMuse != null;
+    }
 }

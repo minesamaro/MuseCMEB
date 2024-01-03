@@ -10,6 +10,8 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -50,6 +52,18 @@ public class Session extends AppCompatActivity {
             // Here we should start the end of session activity
             endOfSessionLayout();
         });
+
+        // Show the Gradient Bar only if the Muse is connected
+        RelativeLayout relativeLayout = findViewById(R.id.gradientVis);
+        ImageView imageView = findViewById(R.id.gradient);
+        if (((GlobalMuse) getApplication()).MuseConnected()) {
+            relativeLayout.setVisibility(RelativeLayout.VISIBLE);
+            imageView.setVisibility(ImageView.VISIBLE);
+        } else {
+            // Show the Muse not connected message
+            relativeLayout.setVisibility(RelativeLayout.INVISIBLE);
+            imageView.setVisibility(ImageView.INVISIBLE);
+        }
 
         // Retrieve the chosen music option from the intent
         String chosenMusic = getIntent().getStringExtra("chosenMusic");
@@ -128,13 +142,17 @@ public class Session extends AppCompatActivity {
     private void setNewerCircleView(){
         CircleView circleView = findViewById(R.id.circleView);
 
-        // Start the data acquisition service
-        stressIndex = ((GlobalMuse) this.getApplication()).getMomentStressIndex();
-        Log.i("StressIdx", String.valueOf(stressIndex));
+        if (!((GlobalMuse) getApplication()).MuseConnected())
+        {
+            parsedStressIndex = 100;
+        } else{
+            // Start the data acquisition service
+            stressIndex = ((GlobalMuse) this.getApplication()).getMomentStressIndex();
+            Log.i("StressIdx", String.valueOf(stressIndex));
 
-        parsedStressIndex = MappingFunctions.lin(stressIndex);
-        Log.i("parsedStressIdx", String.valueOf(parsedStressIndex));
-
+            parsedStressIndex = MappingFunctions.lin(stressIndex);
+            Log.i("parsedStressIdx", String.valueOf(parsedStressIndex));
+        }
         circleView.changeColorPulsatingAnimation(parsedStressIndex);
         addIndex(parsedStressIndex);
     }

@@ -15,7 +15,7 @@
     <string name="connect">Connect</string>
     <string name="disconnect">Disconnect</string>
     <string name="status">Connection Status</string>
-    <string name="undefined">unknown</string>
+    <string name="undefined">Muse Not Connected</string>
     <string name="eeg">EEG data</string>
     <string name="init_val">0</string>
     <string name="version">Version</string>
