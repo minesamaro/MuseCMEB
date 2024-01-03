@@ -1,16 +1,14 @@
 package org.mines.cmeb.musecmeb;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import java.util.Collections;
@@ -19,7 +17,9 @@ import java.util.List;
 
 public class HistoryFragment extends Fragment {
 
+    // ListView to display the relaxation sessions
     private ListView listView;
+    // List of relaxation sessions
     private List<RelaxationSession> sessions;
 
     public HistoryFragment() {
@@ -32,7 +32,9 @@ public class HistoryFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_history, container, false);
 
+        // Initialize the ListView
         listView = view.findViewById(android.R.id.list);
+        // Display the relaxation sessions in the ListView
         displayData();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -48,28 +50,34 @@ public class HistoryFragment extends Fragment {
                 // Set the bundle as arguments to the PastSessionFragment
                 pastSessionFragment.setArguments(bundle);
 
-                // Get the MainActivity and the ViewPager
+                // Use the FragmentManager to start a FragmentTransaction
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+
+                // Replace the current Fragment in the FrameLayout with the new PastSessionFragment instance
+                transaction.replace(R.id.frame_layout, pastSessionFragment);
+
+                // Add the transaction to the back stack so the user can navigate back
+                transaction.addToBackStack(null);
+
+                // Commit the transaction
+                transaction.commit();
+
+                // Get the MainActivity
                 MainActivity mainActivity = (MainActivity) getActivity();
-                ViewPager viewPager = mainActivity.findViewById(R.id.viewPager);
 
-                // Get the ViewPagerAdapter and add the new fragment
-                MainActivity.ViewPagerAdapter adapter = (MainActivity.ViewPagerAdapter) viewPager.getAdapter();
-                adapter.addFragment(pastSessionFragment);
-
-                // Navigate to the new fragment without animation
-                viewPager.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        viewPager.setCurrentItem(adapter.getCount() - 1, false);
-                    }
-                });
+                // Make the FrameLayout visible and the ViewPager invisible
+                mainActivity.viewPager.setVisibility(View.GONE);
+                mainActivity.frameLayout.setVisibility(View.VISIBLE);
             }
         });
         return view;
     }
 
+    // Method to display the relaxation sessions in the ListView
     private void displayData() {
+        // Create a DatabaseHelper
         DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+        // Get all relaxation sessions from the database
         sessions = dbHelper.getAllRelaxationSessions();
 
         // Sort the sessions in descending order of startDate
@@ -80,19 +88,13 @@ public class HistoryFragment extends Fragment {
             }
         });
 
-        Log.d("HistoryFragment", "Number of sessions retrieved: " + sessions.size());
-
         if (sessions.isEmpty()) {
             // The list is empty, which means there is no data in the database
-            System.out.println("No data in the database");
             return;
         }
 
         // Create a RelaxationSessionAdapter
         RelaxationSessionAdapter adapter = new RelaxationSessionAdapter(getContext(), sessions);
-
-        // Log the count of items in the adapter
-        Log.d("HistoryFragment", "Number of items in adapter: " + adapter.getCount());
 
         // Set the adapter on the ListView
         listView.setAdapter(adapter);

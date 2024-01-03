@@ -2,6 +2,7 @@ package org.mines.cmeb.musecmeb;
 
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
@@ -24,6 +25,8 @@ public class Session extends AppCompatActivity {
     private double stressIndex;
     private int parsedStressIndex;
 
+    private MediaPlayer mediaPlayer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +41,6 @@ public class Session extends AppCompatActivity {
 
         circleView.setupPulsatingAnimation();
 
-
-
         // Exit button settings
         Button button = findViewById(R.id.sessionExitBt);
         button.setBackgroundColor(Color.parseColor("#F96E46"));
@@ -50,11 +51,47 @@ public class Session extends AppCompatActivity {
             endOfSessionLayout();
         });
 
+        // Retrieve the chosen music option from the intent
+        String chosenMusic = getIntent().getStringExtra("chosenMusic");
+        playMusic(chosenMusic);
+
         // TEST METHOD (comment if not needed)
         //testCircleView();
 
         // TEST for LibTest
         acquireData();
+    }
+    @Override
+    protected void onDestroy() {
+        // Release the MediaPlayer resources when the activity is destroyed
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+        }
+
+        super.onDestroy();
+    }
+    /**
+     * Method that retrieves the chosen music option from MusicOptions
+     */
+    private int getMusicResourceId(String chosenMusic) {
+        // Map the chosen music to its corresponding resource ID
+        if ("Music1".equals(chosenMusic)) {
+            return R.raw.paul;
+        } else if ("Music2".equals(chosenMusic)) {
+            return R.raw.rainbow;
+        }
+        return 0; // Default value, adjust as needed
+    }
+
+    private void playMusic(String chosenMusic) {
+        // Initialize and start MediaPlayer based on the chosen music
+        int musicResourceId = getMusicResourceId(chosenMusic);
+        mediaPlayer = MediaPlayer.create(this, musicResourceId);
+        mediaPlayer.start();
+    }
+
+    private void stopMusic(){
+        mediaPlayer.stop();
     }
 
 
@@ -110,6 +147,9 @@ public class Session extends AppCompatActivity {
     private void endSession() {
         // Stop running of updating Circle
         handler.removeCallbacks(updateCircleViewTask);
+
+        // Stop the background music
+        stopMusic();
 
         // Get time of session
         Date finishDate = new Date();

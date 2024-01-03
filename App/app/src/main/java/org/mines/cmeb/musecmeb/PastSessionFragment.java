@@ -4,33 +4,47 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 
+import kotlin.collections.IndexedValue;
+
 public class PastSessionFragment extends Fragment{
 
+    private ImageButton backButton;
+    private TextView sessionTitle;
+    private TextView relaxTimeText;
     LineChart sessionChart;
     private int[] indexes;
     private int sessionId;
@@ -45,9 +59,9 @@ public class PastSessionFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_past_session, container, false);
 
         // Get the views on the page
-        ImageButton backButton = view.findViewById(R.id.backButton);
-        TextView sessionTitle = view.findViewById(R.id.sessionTitle);
-        TextView relaxTimeText = view.findViewById(R.id.relaxTimeText);
+        backButton = view.findViewById(R.id.backButton);
+        sessionTitle = view.findViewById(R.id.sessionTitle);
+        relaxTimeText = view.findViewById(R.id.relaxTimeText);
         sessionChart = (LineChart) view.findViewById(R.id.chart1);
 
 
@@ -62,6 +76,7 @@ public class PastSessionFragment extends Fragment{
             }
 
         Context context = getContext();
+        int light_blue = ContextCompat.getColor(context, R.color.our_light_blue);
         int pink = ContextCompat.getColor(context, R.color.our_pink);
 
 

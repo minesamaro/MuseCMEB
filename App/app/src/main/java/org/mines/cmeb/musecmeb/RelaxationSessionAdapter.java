@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class RelaxationSessionAdapter extends ArrayAdapter<RelaxationSession> {
+    //Used to display the past sessions in a list in the history fragment
     private final Context context;
     private final List<RelaxationSession> sessions;
 
@@ -27,9 +28,11 @@ public class RelaxationSessionAdapter extends ArrayAdapter<RelaxationSession> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        // Inflate the layout for each row of the ListView
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.row, parent, false);
 
+        // Get the TextViews for the session text and start date
         TextView sessionTextView = rowView.findViewById(R.id.session_text);
         TextView startDateView = rowView.findViewById(R.id.start_date);
 
@@ -40,6 +43,7 @@ public class RelaxationSessionAdapter extends ArrayAdapter<RelaxationSession> {
         // Append the session id to the "Session" string
         String sessionText = "Session " + sessions.get(position).getId();
 
+        // Set the text of the TextViews
         sessionTextView.setText(sessionText);
         startDateView.setText(formattedDate);
 

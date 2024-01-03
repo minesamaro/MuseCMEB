@@ -1,5 +1,8 @@
 package org.mines.cmeb.musecmeb;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -10,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.content.SharedPreferences;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -70,17 +74,35 @@ public class MenuFragment extends Fragment {
 
         // Starts the Session activity when the button is clicked
         startButton.setOnClickListener(view1 -> {
+            String chosenMusic = getChosenMusicOption();
             Intent intent = new Intent(getActivity(), Session.class);
+            intent.putExtra("chosenMusic", chosenMusic);
             startActivity(intent);
         });
 
+        // Button + intent to start the SettingsMenu activity
         ImageButton connectBt = view.findViewById(R.id.imageButton2);
         connectBt.setOnClickListener(view1 -> {
-            Intent intent = new Intent(getActivity(), LibTest.class);
+            Intent intent = new Intent(getActivity(), SettingsMenu.class); // changed
             startActivity(intent);
         });
 
         // Inflate the layout for this fragment
         return view;
+    }
+
+    private String getChosenMusicOption() {
+        // Retrieve the chosen music option from shared preferences
+        SharedPreferences preferences = requireContext().getSharedPreferences("MusicOptionsPrefs", requireContext().MODE_PRIVATE);
+
+        // Get the stored value, or provide a default option if not available
+        String chosenMusic = preferences.getString("chosenMusic", "");
+
+        // Check if the chosenMusic is empty, it plays Music1 by default
+        if (chosenMusic.isEmpty()) {
+            chosenMusic = "Music1";
+        }
+
+        return chosenMusic;
     }
 }

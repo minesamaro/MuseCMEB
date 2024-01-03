@@ -139,8 +139,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		for (int value : array) {
 			builder.append(value).append(",");
 		}
-		// Remove the trailing comma
-		return builder.deleteCharAt(builder.length() - 1).toString();
+		// Check if the StringBuilder is not empty before removing the trailing comma
+		if (builder.length() > 0) {
+			builder.deleteCharAt(builder.length() - 1);
+		}
+		return builder.toString();
 	}
 
 	private int[] convertStringToIntArray(String str) {

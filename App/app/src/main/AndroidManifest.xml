@@ -43,24 +43,29 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".Session"
+            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
             android:exported="true"
             android:parentActivityName=".Session">
         </activity>
         <activity
-            android:name=".ConnectionBluetooth"
+            android:name=".SettingsMenu"
             android:exported="true"
             android:parentActivityName=".MainActivity">
         </activity>
         <activity
             android:name=".LibTest"
             android:exported="true"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".SettingsMenu">
+        </activity>
+        <activity
+            android:name=".MusicOptions"
+            android:exported="true"
+            android:parentActivityName=".SettingsMenu">
         </activity>
     </application>
 

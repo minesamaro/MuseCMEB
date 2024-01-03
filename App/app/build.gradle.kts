@@ -40,5 +40,5 @@ dependencies {
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
-    implementation(files("C:/Users/HP/Downloads/libmuse_android_7.1.1.1/libmuse_android_7.1.1/libs/libmuse_android.jar"))
+    implementation(files("C:\\Users\\pc\\Documents\\Francisco\\Mestrado\\1o ano\\CM\\MuseCMEB\\App\\app\\src\\main\\libmuse\\libmuse_android.jar"))
 }
