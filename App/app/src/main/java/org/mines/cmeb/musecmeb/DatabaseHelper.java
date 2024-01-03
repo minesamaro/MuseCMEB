@@ -79,7 +79,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		long rowId6 = db.insert(TABLE_SESSIONS, null, values6);
 
 		ContentValues values7 = new ContentValues();
-		values7.put(COLUMN_STRESS_INDEXES, "100,62,62,62,62,62,53,53,53,53,53,57,57,57,57,57,43,43,43,43,43,36,36,36,36,36,44,44,44,44,44,44,53,53,53,53,53,54,54,54,54,54,54,54");
+		values7.put(COLUMN_STRESS_INDEXES, "100,82,72,75,63,52,54,50,51,46,49,48,45,38,36,43,48,45,43,40,38,36,33,36,30,26,29,24,24,21,23,18,16,20,19,16,13,14,11,9,10,12,9,7");
 		values7.put(COLUMN_RELAXATION_TIME, 3.74f);
 		values7.put(COLUMN_START_DATE, "2023-12-11" );
 		long rowId7 = db.insert(TABLE_SESSIONS, null, values7);

@@ -80,7 +80,7 @@ public class CircleView extends View {
 
     private void init() {
         Context context = getContext();
-        int color = ContextCompat.getColor(context, R.color.our_light_blue);
+        int color = ContextCompat.getColor(context, R.color.our_pink);
 
         //paint = new Paint();
         paint.setColor(color); // Set the circle color
