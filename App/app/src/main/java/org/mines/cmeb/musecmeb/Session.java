@@ -94,14 +94,22 @@ public class Session extends AppCompatActivity {
         } else if ("Nature Jungle".equals(chosenMusic)) {
             return R.raw.jungle;
         }
-        return 0; // Default value, adjust as needed
+        return 0; // Default value
     }
 
     private void playMusic(String chosenMusic) {
-        // Initialize and start MediaPlayer based on the chosen music
-        int musicResourceId = getMusicResourceId(chosenMusic);
-        mediaPlayer = MediaPlayer.create(this, musicResourceId);
-        mediaPlayer.start();
+        if (!chosenMusic.equals("No Music")) {
+            // Initialize and start MediaPlayer based on the chosen music
+            int musicResourceId = getMusicResourceId(chosenMusic);
+            mediaPlayer = MediaPlayer.create(this, musicResourceId);
+
+            mediaPlayer.setOnCompletionListener(mp -> {
+                // Set looping to true to play the music indefinitely
+                mediaPlayer.setLooping(true);
+            });
+
+            mediaPlayer.start();
+        }
     }
 
     private void stopMusic(){
@@ -166,8 +174,9 @@ public class Session extends AppCompatActivity {
         // Stop running of updating Circle
         handler.removeCallbacks(updateCircleViewTask);
 
-        // Stop the background music
-        stopMusic();
+        // Reduce the volume of the music
+        if (mediaPlayer != null)
+            mediaPlayer.setVolume(0.2f, 0.2f);  // 20% of the original volume
 
         // Get time of session
         Date finishDate = new Date();

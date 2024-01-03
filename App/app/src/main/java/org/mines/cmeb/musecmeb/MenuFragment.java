@@ -69,12 +69,11 @@ public class MenuFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
 
-        // Central button to start a session (for some reason, works with an ImageView as a button)
         ImageView startButton = view.findViewById(R.id.startSessionBt);
-
-        // Starts the Session activity when the button is clicked
         startButton.setOnClickListener(view1 -> {
             String chosenMusic = getChosenMusicOption();
+
+            // Start the Session activity
             Intent intent = new Intent(getActivity(), Session.class);
             intent.putExtra("chosenMusic", chosenMusic);
             startActivity(intent);
@@ -98,9 +97,9 @@ public class MenuFragment extends Fragment {
         // Get the stored value, or provide a default option if not available
         String chosenMusic = preferences.getString("chosenMusic", "");
 
-        // Check if the chosenMusic is empty, it plays Music1 by default
+        // Check if the chosenMusic is empty, it will not play any music by default
         if (chosenMusic.isEmpty()) {
-            chosenMusic = "Soothing Rain";
+            chosenMusic = "No Music";
         }
 
         return chosenMusic;
