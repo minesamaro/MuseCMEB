@@ -1,14 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingVertical="2dp"
+    android:paddingTop="10dp"
+    tools:context=".SettingsMenu">
 
-    <ImageButton
-        android:id="@+id/backButton"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_gravity="start"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:contentDescription="Back button in the settings layout"
-        android:src="@drawable/ic_arrow_back" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/our_lighter_blue"
+        android:orientation="vertical"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="start"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Back button in the music options layout"
+            android:src="@drawable/ic_arrow_back" />
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_weight="0"
+            android:background="@android:color/transparent"
+            android:elevation="4dp"
+            android:minHeight="?attr/actionBarSize"
+            android:paddingTop="0dp"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:title="@string/music_selection"
+            app:titleMargin="5dp"
+            app:titleTextColor="@color/our_dark_blue">
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+
+
+            android:drawSelectorOnTop="false"
+
+            android:paddingHorizontal="5dp"
+            android:paddingVertical="10dp"
+            android:paddingStart="20dp">
+
+        </ListView>
+
+    </LinearLayout>
+
+
+</FrameLayout>
