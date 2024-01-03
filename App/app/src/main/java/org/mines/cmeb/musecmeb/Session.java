@@ -75,10 +75,10 @@ public class Session extends AppCompatActivity {
      */
     private int getMusicResourceId(String chosenMusic) {
         // Map the chosen music to its corresponding resource ID
-        if ("Music1".equals(chosenMusic)) {
-            return R.raw.paul;
-        } else if ("Music2".equals(chosenMusic)) {
-            return R.raw.rainbow;
+        if ("Soothing Rain".equals(chosenMusic)) {
+            return R.raw.rain;
+        } else if ("Nature Jungle".equals(chosenMusic)) {
+            return R.raw.jungle;
         }
         return 0; // Default value, adjust as needed
     }

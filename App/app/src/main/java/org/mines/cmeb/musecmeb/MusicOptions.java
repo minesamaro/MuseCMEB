@@ -28,7 +28,7 @@ public class MusicOptions extends ListActivity {
         preferences = getSharedPreferences("MusicOptionsPrefs", MODE_PRIVATE);
 
         // Define options
-        String[] options = {"Music1", "Music2"};
+        String[] options = {"Soothing Rain", "Nature Jungle"};
 
         // Set up the ArrayAdapter with the built-in layout (simple_list_item_1)
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, options);

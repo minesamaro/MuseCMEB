@@ -100,7 +100,7 @@ public class MenuFragment extends Fragment {
 
         // Check if the chosenMusic is empty, it plays Music1 by default
         if (chosenMusic.isEmpty()) {
-            chosenMusic = "Music1";
+            chosenMusic = "Soothing Rain";
         }
 
         return chosenMusic;

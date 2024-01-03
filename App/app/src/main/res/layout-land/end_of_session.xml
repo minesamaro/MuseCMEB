@@ -6,7 +6,10 @@
     android:background="@color/our_lighter_blue"
     android:orientation="vertical"
     android:paddingLeft="8dp"
-    android:paddingRight="8dp">
+    android:paddingRight="8dp"
+    android:scrollbars="vertical"
+    android:verticalScrollbarPosition="right">
+
 
     <ImageButton
         android:id="@+id/backButton"
@@ -43,22 +46,32 @@
             android:layout_marginBottom="10dp"
             android:src="@drawable/relax_icon" />
 
-        <TextView
-            android:id="@+id/secondLineTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="Time of relaxation:"
-            android:textColor="@color/our_dark_blue"
-            android:textSize="18sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/sessionTimeTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="5 min and 34 sec"
-            android:textColor="@color/our_pink"
-            android:textSize="22sp" />
+            <TextView
+                android:id="@+id/secondLineTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="Time of relaxation:"
+                android:textColor="@color/our_dark_blue"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/sessionTimeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="5 min and 34 sec"
+                android:textColor="@color/our_pink"
+                android:textSize="22sp" />
+        </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>
