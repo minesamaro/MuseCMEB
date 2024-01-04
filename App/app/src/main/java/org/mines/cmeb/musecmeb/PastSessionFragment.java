@@ -125,12 +125,15 @@ public class PastSessionFragment extends Fragment{
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Get the MainActivity and the ViewPager
-                MainActivity mainActivity = (MainActivity) getActivity();
-                ViewPager viewPager = mainActivity.findViewById(R.id.viewPager);
+                // Pop the back stack to return to the previous fragment
+                getFragmentManager().popBackStack();
 
-                // Navigate to HistoryFragment
-                viewPager.setCurrentItem(0); // Assuming HistoryFragment is at position 0
+                // Get the MainActivity
+                MainActivity mainActivity = (MainActivity) getActivity();
+
+                // Make the ViewPager visible and the FrameLayout invisible
+                mainActivity.getViewPager().setVisibility(View.VISIBLE);
+                mainActivity.getFrameLayout().setVisibility(View.GONE);
             }
         });
 

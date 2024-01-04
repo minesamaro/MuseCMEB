@@ -15,7 +15,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class HistoryFragment extends Fragment {
+public class HistoryFragment extends Fragment implements Session.OnSessionEndListener {
 
     // ListView to display the relaxation sessions
     private ListView listView;
@@ -34,6 +34,7 @@ public class HistoryFragment extends Fragment {
 
         // Initialize the ListView
         listView = view.findViewById(android.R.id.list);
+
         // Display the relaxation sessions in the ListView
         displayData();
 
@@ -70,6 +71,10 @@ public class HistoryFragment extends Fragment {
                 mainActivity.frameLayout.setVisibility(View.VISIBLE);
             }
         });
+
+        // Set the OnSessionEndListener in the Session activity
+        Session.setOnSessionEndListener(this);
+
         return view;
     }
 
@@ -98,5 +103,11 @@ public class HistoryFragment extends Fragment {
 
         // Set the adapter on the ListView
         listView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onSessionEnd() {
+        // Refresh the session list when a session ends
+        displayData();
     }
 }

@@ -29,7 +29,20 @@ public class Session extends AppCompatActivity {
 
     private MediaPlayer mediaPlayer;
 
-    @Override
+    // Define the interface
+    public interface OnSessionEndListener {
+        void onSessionEnd();
+    }
+
+    // Add a static instance of OnSessionEndListener
+    private static OnSessionEndListener onSessionEndListener;
+
+    // Add a static method to set it
+    public static void setOnSessionEndListener(OnSessionEndListener listener) {
+        onSessionEndListener = listener;
+    }
+
+        @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.session);
@@ -193,6 +206,11 @@ public class Session extends AppCompatActivity {
         RelaxationSession session = new RelaxationSession(1, stressIndexes, relaxationTime, startDate);
         try (DatabaseHelper dbHelper = new DatabaseHelper(this)) {
             dbHelper.addSession(session);
+
+        }
+        // Call onSessionEnd() on the listener when a session ends
+        if (onSessionEndListener != null) {
+            onSessionEndListener.onSessionEnd();
         }
     }
     private void endOfSessionLayout(){
