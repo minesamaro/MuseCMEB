@@ -198,39 +198,39 @@ public class LibTest extends Activity implements OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // We need to set the context on MuseManagerAndroid before we can do anything.
-        // This must come before other LibMuse API calls as it also loads the library.
-        manager = MuseManagerAndroid.getInstance();
-        manager.setContext(this);
+            // We need to set the context on MuseManagerAndroid before we can do anything.
+            // This must come before other LibMuse API calls as it also loads the library.
+            manager = MuseManagerAndroid.getInstance();
+            manager.setContext(this);
 
-        Log.i(TAG, "LibMuse version=" + LibmuseVersion.instance().getString());
-        //idk what this is
-        WeakReference<LibTest> weakActivity =
-                new WeakReference<>(this);
-        // Register a listener to receive connection state changes.
-        connectionListener = new ConnectionListener(weakActivity);
-        // Register a listener to receive data from a Muse.
-        dataListener = new DataListener(weakActivity);
-        // Register a listener to receive notifications of what Muse headbands
-        // we can connect to.
-        manager.setMuseListener(new MuseL(weakActivity));
+            Log.i(TAG, "LibMuse version=" + LibmuseVersion.instance().getString());
+            //idk what this is
+            WeakReference<LibTest> weakActivity =
+                    new WeakReference<>(this);
+            // Register a listener to receive connection state changes.
+            connectionListener = new ConnectionListener(weakActivity);
+            // Register a listener to receive data from a Muse.
+            dataListener = new DataListener(weakActivity);
+            // Register a listener to receive notifications of what Muse headbands
+            // we can connect to.
+            manager.setMuseListener(new MuseL(weakActivity));
 
-        // Muse 2016 (MU-02) headbands use Bluetooth Low Energy technology to
-        // simplify the connection process.  This requires access to the COARSE_LOCATION
-        // or FINE_LOCATION permissions.  Make sure we have these permissions before
-        // proceeding.
-        ensurePermissions();
+            // Muse 2016 (MU-02) headbands use Bluetooth Low Energy technology to
+            // simplify the connection process.  This requires access to the COARSE_LOCATION
+            // or FINE_LOCATION permissions.  Make sure we have these permissions before
+            // proceeding.
+            ensurePermissions();
 
-        // Load and initialize our UI.
-        initUI();
+            // Load and initialize our UI.
+            initUI();
 
-        // Start up a thread for asynchronous file operations.
-        // This is only needed if you want to do File I/O.
-        fileThread.start();
+            // Start up a thread for asynchronous file operations.
+            // This is only needed if you want to do File I/O.
+            fileThread.start();
 
-        // Start our asynchronous updates of the UI.
-        handler = new Handler(getMainLooper());
-        handler.post(tickUi);
+            // Start our asynchronous updates of the UI.
+            handler = new Handler(getMainLooper());
+            handler.post(tickUi);
     }
 
     protected void onPause() {
@@ -293,6 +293,7 @@ public class LibTest extends Activity implements OnClickListener {
                 // Initiate a connection to the headband and stream the data asynchronously.
                 muse.runAsynchronously();
                 ((GlobalMuse) getApplication()).setConnectedMuse(muse);
+                Log.i(TAG, muse.getConnectionState().toString());
             }
 
         } else if (v.getId() == R.id.disconnect) {
@@ -608,9 +609,11 @@ public class LibTest extends Activity implements OnClickListener {
         public void run() {
             if (betaAbsStale) {
                 updateBeta();
+                ((GlobalMuse) getApplication()).setConnectedMuse(muse);
             }
             if (alphaStale) {
                 updateAlpha();
+                ((GlobalMuse) getApplication()).setConnectedMuse(muse);
             }
             handler.postDelayed(tickUi, 1000 / 60);  // 60Hz, this is the refresh rate of the UI!!!
         }

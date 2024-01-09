@@ -72,7 +72,8 @@ public class Session extends AppCompatActivity {
         if (((GlobalMuse) getApplication()).MuseConnected()) {
             relativeLayout.setVisibility(RelativeLayout.VISIBLE);
             imageView.setVisibility(ImageView.VISIBLE);
-        } else {
+        }
+        else {
             // Show the Muse not connected message
             relativeLayout.setVisibility(RelativeLayout.INVISIBLE);
             imageView.setVisibility(ImageView.INVISIBLE);
@@ -116,10 +117,8 @@ public class Session extends AppCompatActivity {
             int musicResourceId = getMusicResourceId(chosenMusic);
             mediaPlayer = MediaPlayer.create(this, musicResourceId);
 
-            mediaPlayer.setOnCompletionListener(mp -> {
-                // Set looping to true to play the music indefinitely
-                mediaPlayer.setLooping(true);
-            });
+            // Set looping to true to  play the music indefinitely
+            mediaPlayer.setLooping(true);
 
             mediaPlayer.start();
         }
@@ -166,7 +165,8 @@ public class Session extends AppCompatActivity {
         if (!((GlobalMuse) getApplication()).MuseConnected())
         {
             parsedStressIndex = 100;
-        } else{
+        }
+        else{
             // Start the data acquisition service
             stressIndex = ((GlobalMuse) this.getApplication()).getMomentStressIndex();
             Log.i("StressIdx", String.valueOf(stressIndex));
