@@ -2,31 +2,33 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
 
     <TextView
         android:id="@+id/session_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:layout_weight="1"
         android:text="Session"
-        android:textColor="@color/our_dark_blue"
-        android:layout_marginBottom="10dp"/>
+        android:textColor="@color/our_dark_blue" />
 
     <TextView
         android:id="@+id/session_id"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:layout_weight="1"
-        android:textColor="@color/our_dark_blue"
-        android:layout_marginBottom="10dp"/>
+        android:textColor="@color/our_dark_blue" />
 
     <TextView
         android:id="@+id/start_date"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:layout_weight="1"
-        android:textColor="@color/our_dark_blue"
-        android:layout_marginBottom="10dp"/>
+        android:textColor="@color/our_dark_blue" />
 
 </LinearLayout>

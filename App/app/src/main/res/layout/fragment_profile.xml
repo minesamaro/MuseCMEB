@@ -22,7 +22,7 @@
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="328dp"
-        android:layout_height="539dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +36,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="35dp"
-            android:text="Pedro Ferreira"
+            android:text="Profile"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textColor="@color/our_dark_blue" />
@@ -47,16 +47,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:textColor="@color/our_dark_blue"
             android:text="Time of Relaxation evolution"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="@color/our_dark_blue" />
 
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/indexesChart"
             android:layout_width="match_parent"
-            android:layout_height="190dp">
+            android:layout_height="190dp"></com.github.mikephil.charting.charts.LineChart>
 
-        </com.github.mikephil.charting.charts.LineChart>
+        <TextView
+            android:id="@+id/valueTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/barLegend"
@@ -65,7 +72,7 @@
             android:layout_marginTop="10dp"
             android:text="Activity"
             android:textAlignment="center"
-            android:textColor="@color/our_dark_blue"/>
+            android:textColor="@color/our_dark_blue" />
 
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/sessionActivity"

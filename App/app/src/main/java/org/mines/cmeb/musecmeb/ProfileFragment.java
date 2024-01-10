@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
@@ -25,6 +26,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
+import com.github.mikephil.charting.utils.MPPointD;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,7 +36,7 @@ import java.util.Date;
  * Use the {@link ProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProfileFragment extends Fragment {
+public class ProfileFragment extends Fragment implements Session.OnSessionEndListener{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -45,8 +47,10 @@ public class ProfileFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private LineChart indexesChart;
+    private TextView valueTextView;
     private BarChart sessionActivity;
     int light_blue;
+    int dark_blue;
     int pink;
 
     public ProfileFragment() {
@@ -87,11 +91,16 @@ public class ProfileFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         indexesChart = view.findViewById(R.id.indexesChart);
+        valueTextView = view.findViewById(R.id.valueTextView);
         sessionActivity = view.findViewById(R.id.sessionActivity);
 
         Context context = getContext();
         light_blue = ContextCompat.getColor(context, R.color.our_light_blue);
         pink = ContextCompat.getColor(context, R.color.our_pink);
+        dark_blue = ContextCompat.getColor(context, R.color.our_dark_blue);
+
+        // Set the OnSessionEndListener in the Session activity
+        Session.setOnSessionEndListener(this);
 
         // Retrieve data from past sessions
         lineChart();
@@ -106,9 +115,19 @@ public class ProfileFragment extends Fragment {
         float[] relaxationTimes = dbHelper.getAllRelaxationTimes();
 
         // Line Chart Definitions and settings
-        LineDataSet lineDataSet1 = new LineDataSet(dataValues(relaxationTimes), "Relaxation Times");
+        LineDataSet lineDataSet1 = new LineDataSet(dataValues(relaxationTimes), "Relaxation Times (min)");
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(lineDataSet1);
+        // Don't show values on the chart
+        lineDataSet1.setDrawValues(false);
+        // When the chart is clicked, show the value of the point
+        lineDataSet1.setDrawHighlightIndicators(true);
+        lineDataSet1.setHighlightEnabled(true);
+        lineDataSet1.setHighLightColor(pink);
+        lineDataSet1.setCircleHoleColor(pink);
+        lineDataSet1.setCircleColor(pink);
+        lineDataSet1.setCircleRadius(3);
+
 
         indexesChart.getAxisRight().setEnabled(false);
         indexesChart.getDescription().setEnabled(false);
@@ -141,6 +160,35 @@ public class ProfileFragment extends Fragment {
         yAxis.setDrawGridLines(false);
         yAxis.setAxisMinimum(0f);
 
+        indexesChart.setOnChartValueSelectedListener(new com.github.mikephil.charting.listener.OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, com.github.mikephil.charting.highlight.Highlight h) {
+                // Display information when a point is clicked
+                float xValue = h.getX();
+                float yValue = h.getY();
+
+                MPPointD pos = indexesChart.getTransformer(YAxis.AxisDependency.LEFT).getPixelForValues(xValue, yValue);
+                // Convert the position to the position in the screen in pixels
+
+                valueTextView.setX((float) pos.x);
+                valueTextView.setY((float) (pos.y) + 225);
+
+
+                String text = "Session " + (int) xValue + "\n " + String.format("%.2f", yValue) + " min";
+                valueTextView.setText(text);
+                // Make text smaller
+                valueTextView.setTextSize(10);
+                valueTextView.setTextColor(dark_blue);
+                valueTextView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onNothingSelected() {
+                // Hide the information when no point is clicked
+                valueTextView.setVisibility(View.INVISIBLE);
+            }
+        });
+
         // Plot the chart
         LineData data = new LineData(dataSets);
         indexesChart.setData(data);
@@ -154,8 +202,19 @@ public class ProfileFragment extends Fragment {
         int[] sessionCounts = dbHelper.getSessionCountsLast7Days();
 
         // Line Chart Definitions and settings
-        BarDataSet barDataSet1 = new BarDataSet(dataValues(sessionCounts), "Sessions per day");
+        // Make the value in the x axis the days of the week back from today
+        String[] days = new String[7];
+        Date today = new Date();
+        for (int i = 0; i < 7; i++) {
+            days[i] = today.toString().substring(0, 3);
+            today.setTime(today.getTime() - 86400000);
+        }
+        IndexAxisValueFormatter formatter = new IndexAxisValueFormatter(days);
+        sessionActivity.getXAxis().setValueFormatter(formatter);
+
+        BarDataSet barDataSet1 = new BarDataSet(dataValues(sessionCounts), "Sessions last week");
         BarData barData = new BarData(barDataSet1);
+        barDataSet1.setValueFormatter(new IntegerValueFormatter());
         sessionActivity.setData(barData);
 
         sessionActivity.getAxisRight().setEnabled(false);
@@ -169,7 +228,8 @@ public class ProfileFragment extends Fragment {
 
         barDataSet1.setColor(pink);
         barDataSet1.setValueTextSize(10);
-        barDataSet1.setValueTextColor(pink);
+        barDataSet1.setValueTextColor(dark_blue);
+
 
         // Position the X-axis at the bottom and change colors
         XAxis xAxis = sessionActivity.getXAxis();
@@ -209,5 +269,23 @@ public class ProfileFragment extends Fragment {
             dataVal.add(new BarEntry(i, indexes[i]));
         }
         return dataVal;
+    }
+
+    @Override
+    public void onSessionEnd() {
+        // Refresh the session list when a session ends
+        lineChart();
+        barChart();
+    }
+
+    private static class IntegerValueFormatter extends com.github.mikephil.charting.formatter.ValueFormatter {
+        @Override
+        public String getFormattedValue(float value) {
+            // if value is zero, return an empty string
+            if (value == 0f) {
+                return "";
+            }
+            return String.valueOf((int) value);
+        }
     }
 }
