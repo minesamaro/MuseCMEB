@@ -25,6 +25,10 @@ public class RelaxationSessionAdapter extends ArrayAdapter<RelaxationSession> {
         this.sessions = sessions;
     }
 
+    /*
+        * This class is used to display the relaxation sessions in a ListView.
+        * It displays the session id and the date and time of the session.
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

@@ -26,6 +26,9 @@ public class HistoryFragment extends Fragment implements Session.OnSessionEndLis
         // Required empty public constructor
     }
 
+    /*
+        * This fragment displays the relaxation sessions in a ListView.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -39,6 +42,10 @@ public class HistoryFragment extends Fragment implements Session.OnSessionEndLis
         displayData();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            /*
+                * This method is called when an item in the ListView is clicked.
+                * It starts a new PastSessionFragment and passes the selected RelaxationSession to it.
+             */
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Create a new instance of PastSessionFragment
@@ -78,7 +85,10 @@ public class HistoryFragment extends Fragment implements Session.OnSessionEndLis
         return view;
     }
 
-    // Method to display the relaxation sessions in the ListView
+    /*
+        * This method is called when a session ends o when the Fragment is Created.
+        * It refreshes the session list.
+     */
     private void displayData() {
         // Create a DatabaseHelper
         DatabaseHelper dbHelper = new DatabaseHelper(getContext());
@@ -105,6 +115,10 @@ public class HistoryFragment extends Fragment implements Session.OnSessionEndLis
         listView.setAdapter(adapter);
     }
 
+    /*
+        * This method is called when a session ends.
+        * It refreshes the session list.
+     */
     @Override
     public void onSessionEnd() {
         // Refresh the session list when a session ends

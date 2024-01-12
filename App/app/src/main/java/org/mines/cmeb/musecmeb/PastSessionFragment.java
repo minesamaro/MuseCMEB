@@ -51,6 +51,12 @@ public class PastSessionFragment extends Fragment{
     private float relaxationTime;
     private Date startDate;
 
+    /*
+        * This fragment displays the summary of a relaxation session.
+        * It displays the session id, the date and time of the session, the duration of the session,
+        * and a chart of the stress index over time.
+        * The stress index is calculated from the EEG data received from the Muse and stored during the Session.
+     */
     @SuppressLint("MissingInflatedId")
     @Nullable
     @Override
@@ -149,6 +155,7 @@ public class PastSessionFragment extends Fragment{
         return view;
     }
 
+    // This method is used to create the data set for the chart
     private ArrayList<Entry> dataValues()
     {
         ArrayList<Entry> dataVal = new ArrayList<Entry>();
@@ -158,7 +165,7 @@ public class PastSessionFragment extends Fragment{
         return dataVal;
     }
 
-
+    // This method is used to format the date
     private String getFormattedDate(Date date){
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -166,6 +173,7 @@ public class PastSessionFragment extends Fragment{
         return sdf.format(date);
     }
 
+    // This method is used to format the time of relaxation
     private String getFormattedTimeOfRelaxation(float time){
         int minutes = (int) time;
         int seconds = (int) ((time - minutes) * 60);

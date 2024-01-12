@@ -110,6 +110,9 @@ public class Session extends AppCompatActivity {
         return 0; // Default value
     }
 
+    /**
+     * Method that plays the chosen music
+     */
     private void playMusic(String chosenMusic) {
         if (!chosenMusic.equals("No Music")) {
             // Initialize and start MediaPlayer based on the chosen music
@@ -147,17 +150,6 @@ public class Session extends AppCompatActivity {
         handler.postDelayed(updateCircleViewTask, 1000); // Start the task initially
     }
 
-    private void testCircleView(){
-        handler = new Handler();
-        updateCircleViewTask = new Runnable() {
-            @Override
-            public void run() {
-                setNewCircleView();
-                handler.postDelayed(this, 3000); // 3 seconds
-            }
-        };
-        handler.postDelayed(updateCircleViewTask, 3000); // Start the task initially
-    }
     private void setNewerCircleView(){
         CircleView circleView = findViewById(R.id.circleView);
 
@@ -176,12 +168,10 @@ public class Session extends AppCompatActivity {
         circleView.changeColorPulsatingAnimation(parsedStressIndex);
         addIndex(parsedStressIndex);
     }
-    private void setNewCircleView(){
-        CircleView circleView = findViewById(R.id.circleView);
-        int rnd_num = (int) (Math.random() * 101);  // Random number between 0 and 100 (our fake stress index)
-        circleView.changeColorPulsatingAnimation(rnd_num);
-    }
 
+    /**
+     * Method that ends the session, saves the data and updates the database and charts
+     */
     private void endSession() {
         // Stop running of updating Circle
         handler.removeCallbacks(updateCircleViewTask);
@@ -212,6 +202,10 @@ public class Session extends AppCompatActivity {
             onSessionEndListener.onSessionEnd();
         }
     }
+
+    /**
+     * Method that displays the end of session layout
+     */
     private void endOfSessionLayout(){
         setContentView(R.layout.end_of_session);
         ImageButton backBt = findViewById(R.id.backButton);
@@ -232,6 +226,10 @@ public class Session extends AppCompatActivity {
         dynamicList.add(index);
     }
 
+    /**
+     * Method that checks if the user is relaxed. This happens when the last 20 values are lower than 20
+     * @return true if the user is relaxed, false otherwise
+     */
     private boolean checkIfRelaxed(){
         int necessaryLength = 20;
         int stressThreshold = 20;
@@ -252,6 +250,11 @@ public class Session extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Method that returns a string representation of the time of relaxation
+     * @param time the time of relaxation in minutes
+     * @return a string representation of the time of relaxation
+     */
     private String getFormattedTimeOfRelaxation(float time){
         int minutes = (int) time;
         int seconds = (int) ((time - minutes) * 60);

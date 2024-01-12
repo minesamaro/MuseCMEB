@@ -10,6 +10,11 @@ public class RelaxationSession implements Serializable {
     private float relaxationTime;
     private Date startDate;
 
+    /*
+        * This class is used to store the data from a relaxation session.
+        * It stores the id of the session, the stress indexes calculated from the EEG data received
+        * from the Muse, the duration of the session, and the date and time of the session.
+     */
     public RelaxationSession(int id, int[] stressIndexes, float relaxationTime, Date startDate) {
         this.id = id;
         this.stressIndexes = stressIndexes;
@@ -24,10 +29,6 @@ public class RelaxationSession implements Serializable {
     }
 
     public int[] getStressIndexes() {
-
-        // epochs of 3 seconds
-        //read eeg 2 seconds and calculate the stress index
-        // mean power_alpha from all samples of 2 seconds
         return stressIndexes;
     }
 

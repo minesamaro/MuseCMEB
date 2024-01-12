@@ -62,21 +62,11 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 /**
- * This example will illustrate how to connect to a Muse headband,
- * register for and receive EEG data and disconnect from the headband.
- * Saving EEG data to a .muse file is also covered.
- *
- * Usage instructions:
- * 1. Pair your headband if necessary.
- * 2. Run this project.
- * 3. Turn on the Muse headband.
- * 4. Press "Refresh". It should display all paired Muses in the Spinner drop down at the
- *    top of the screen.  It may take a few seconds for the headband to be detected.
- * 5. Select the headband you want to connect to and press "Connect".
- * 6. You should see EEG and accelerometer data as well as connection status,
- *    version information and relative alpha values appear on the screen.
- * 7. You can pause/resume data transmission with the button at the bottom of the screen.
- * 8. To disconnect from the headband, press "Disconnect"
+ * This code was adapted from the Muse SDK example code.
+ * It is used to connect to the Muse headband and receive EEG data from it.
+ * It is also used to calculate the stress index from the EEG data.
+ * Some of the comments in this code were written by the original authors of the Muse SDK example code.
+ * Other comments and fucntions were written by the Euterpe team.
  */
 public class LibTest extends Activity implements OnClickListener {
 
@@ -131,8 +121,6 @@ public class LibTest extends Activity implements OnClickListener {
      * MuseDataPacketType, which specify 3 values for accelerometer and 6
      * values for EEG and EEG-derived packets.
      */
-
-    private static final int REQUEST_BLUETOOTH_PERMISSIONS = 1; // I CHANGED THIS (Francisco)
     private final double[] eegBuffer = new double[6];
     private boolean eegStale;
     private final double[] alphaBuffer = new double[6];
@@ -144,8 +132,6 @@ public class LibTest extends Activity implements OnClickListener {
     private  double[] betaAbsBuffer = new double[6];
     private boolean betaAbsStale;
     private double[][] betaTimeBuffer = new double[100][2];
-
-    private  double betaMean;
     private double meanAlpha;
     private double meanBeta;
     private final double[] accelBuffer = new double[3];
@@ -233,6 +219,7 @@ public class LibTest extends Activity implements OnClickListener {
             handler.post(tickUi);
     }
 
+
     protected void onPause() {
         super.onPause();
         // It is important to call stopListening when the Activity is paused
@@ -240,11 +227,10 @@ public class LibTest extends Activity implements OnClickListener {
         manager.stopListening();
     }
 
-    @SuppressWarnings("unused")
-    public boolean isBluetoothEnabled() {
-        return BluetoothAdapter.getDefaultAdapter().isEnabled();
-    }
-
+    /**
+     * This is called when the user presses any button on the Connections Page.
+     * @param v The view that triggered this callback.
+     */
     @Override
     public void onClick(View v) {
 
@@ -448,7 +434,6 @@ public class LibTest extends Activity implements OnClickListener {
             case EEG:
                 getEegChannelValues(eegBuffer,p);
                 eegStale = true;
-                Log.i("eegsample", "received one  sample");
                 break;
             case ACCELEROMETER:
                 getAccelValues(p);
@@ -463,7 +448,6 @@ public class LibTest extends Activity implements OnClickListener {
             case ALPHA_ABSOLUTE:
                 getEegChannelValues(alphaAbsBuffer,p);
                 alphaAbsStale = true;
-                Log.i("alphaSample", "received one alpha sample");
 
                 if (samplesAlpha < 100){
                     UpdateAlphaTimeBuffer(alphaTimeBuffer, alphaAbsBuffer,samplesAlpha);
@@ -472,7 +456,6 @@ public class LibTest extends Activity implements OnClickListener {
 
                 else if (samplesAlpha == 100){
                     alphaReady = true;
-                    Log.i("alphaready","im ready");
                 }
 
                 break;
@@ -480,7 +463,6 @@ public class LibTest extends Activity implements OnClickListener {
             case BETA_ABSOLUTE:
                 getEegChannelValues(betaAbsBuffer,p);
                 betaAbsStale = true;
-                Log.i("betaSample", "received one beta sample");
 
                 if (samplesBeta < 100){
                     UpdateBetaTimeBuffer(betaTimeBuffer, betaAbsBuffer,samplesBeta);
@@ -489,7 +471,6 @@ public class LibTest extends Activity implements OnClickListener {
 
                 else if (samplesBeta == 100){
                     betaReady = true;
-                    Log.i("betaready","im ready");
                 }
                 break;
 
@@ -620,8 +601,7 @@ public class LibTest extends Activity implements OnClickListener {
     };
 
     /**
-     * The following methods update the TextViews in the UI with the data
-     * from the buffers.
+     * The following methods update the ImageViews in the UI if the Muse is well Positioned. or not.
      */
     private void updateBeta() {
         if (betaAbsBuffer[0] != 0){
@@ -654,10 +634,11 @@ public class LibTest extends Activity implements OnClickListener {
         }
     }
 
-
-    //public static double averagePower(double[] MeanChannel) {
-    //  return Arrays.stream(MeanChannel).average().orElse(Double.NaN);
-    //}
+    /**
+     * Calculates the average power of the signal.
+     * @param timeBuffer    The buffer containing the signal
+     * @return              The average power of the signal
+     */
     public static double averagePower(double[][] timeBuffer) {
         double sum = 0;
         for (double[] row : timeBuffer) {
@@ -668,6 +649,9 @@ public class LibTest extends Activity implements OnClickListener {
         return sum / (timeBuffer.length * timeBuffer[0].length); // average power of the signal (sum of all values divided by the number of values)
     }
 
+    /**
+     * The following methods update the ImageViews in the UI if the Muse is well positioned or not.
+     */
     private void updateAlpha() {
         if (alphaAbsBuffer[0] != 0){
             ImageView img = findViewById(R.id.ch1Status);
@@ -698,26 +682,23 @@ public class LibTest extends Activity implements OnClickListener {
             img.setImageResource(R.drawable.verified_dark);
         }
     }
+
+    /**
+     * Calculates the mean power of the alpha and beta waves, and the stress index.
+     */
     private void meanPower(){
         meanAlpha = averagePower(alphaTimeBuffer);
         meanBeta = averagePower(betaTimeBuffer);
         stressIndex = meanBeta / meanAlpha;
 
-        Log.i("alpha", String.valueOf(meanAlpha));
-        Log.i("beta", String.valueOf(meanBeta));
         Log.i("stressIndex", String.valueOf(stressIndex));
 
         ((GlobalMuse) getApplication()).setMomentStressIndex(stressIndex);
-
-        if (stressIndex<0.9){
-
-            Log.i("mental state", "relaxed");
-
-        }
-        else {
-            Log.i("mental state", "stressed");
-        }
     }
+
+    /**
+     * Sets all the ImageViews to the dark verified image.
+     */
     private void setAllVerifiedDark(){
         ImageView img = findViewById(R.id.ch1Status);
         img.setImageResource(R.drawable.verified_dark);
@@ -894,7 +875,6 @@ public class LibTest extends Activity implements OnClickListener {
 
         @Override
         public void receiveMuseDataPacket(final MuseDataPacket p, final Muse muse) {
-            //Log.i("musepacketsample", "received one sample");
             activityRef.get().receiveMuseDataPacket(p, muse);
 
         }

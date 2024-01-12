@@ -32,6 +32,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
 
+	/*
+	 * This method is called when the database is created for the first time.
+	 * This is where the creation of tables and the initial population of the tables should happen.
+	 * The table is created and populated with some default values.
+	 * @param db The database.
+	 */
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		// Create the meditation sessions table
@@ -86,6 +92,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	}
 
+	/*
+	 * This method is called when the database needs to be upgraded.
+	 * This method will only be called if a database already exists on disk with the same DATABASE_NAME,
+	 * but the DATABASE_VERSION is different than the version of the database that exists on disk.
+	 * @param db The database.
+	 * @param oldVersion The old database version.
+	 * @param newVersion The new database version.
+	 */
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// Upgrade the database if needed
@@ -93,7 +107,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		onCreate(db);
 	}
 
-	// Add a new meditation session to the database
+	/*
+	 * This method is called when the database needs to be updated by adding a new session.
+	 * @param session The new session to be added.
+	 * @return The id of the new session.
+	 */
 	public long addSession(RelaxationSession session) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
@@ -106,7 +124,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return id;
 	}
 
-	// Get all meditation sessions from the database
+	/*
+	 * This method is called to retrieve a list of all relaxation sessions from the database.
+	 * @return list of all relaxation sessions as a List<RelaxationSession>.
+	 */
 	public List<RelaxationSession> getAllRelaxationSessions() {
 		List<RelaxationSession> sessions = new ArrayList<RelaxationSession>();
 		String selectQuery = "SELECT * FROM " + TABLE_SESSIONS;
@@ -133,7 +154,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return sessions;
 	}
 
-	// Helper methods for data conversion
+	/*
+	* This method converts an int array to a String.
+	* @param array The int array to be converted.
+	* @return The String representation of the int array.
+	*/
 	private String convertIntArrayToString(int[] array) {
 		StringBuilder builder = new StringBuilder();
 		for (int value : array) {
@@ -146,6 +171,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return builder.toString();
 	}
 
+	/*
+	* This method converts a String to an int array.
+	* @param str The String to be converted.
+	* @return The int array representation of the String.
+	 */
 	private int[] convertStringToIntArray(String str) {
 		String[] strArray = str.split(",");
 		int[] intArray = new int[strArray.length];
@@ -155,11 +185,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return intArray;
 	}
 
+	/*
+	* This method converts a Date to a String.
+	* @param date The Date to be converted.
+	* @return The String representation of the Date.
+	 */
 	private String formatDateToString(Date date) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 		return sdf.format(date);
 	}
 
+	/*
+	* This method converts a String to a Date.
+	* @param str The String to be converted.
+	* @return The Date representation of the String.
+	 */
 	private Date parseStringToDate(String str) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 		try {
@@ -170,6 +210,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		}
 	}
 
+	/*
+	* This method is called to retrieve the relaxation times of all relaxation sessions from the database.
+	* @return relaxation times of all relaxation sessions as a float[].
+	 */
 	public float[] getAllRelaxationTimes() {
 		List<Float> relaxationTimesList = new ArrayList<>();
 
@@ -197,7 +241,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		return relaxationTimesArray;
 	}
 
-	// Method to get session counts for the last 7 days
+	/*
+	* This method returns the number of relaxation sessions in the database per day for the last 7 days.
+	* @return The number of relaxation sessions per day for the last 7 days as an int[].
+	 */
 	public int[] getSessionCountsLast7Days() {
 		int[] sessionCounts = new int[7];
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());

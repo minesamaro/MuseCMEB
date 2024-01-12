@@ -84,6 +84,11 @@ public class ProfileFragment extends Fragment implements Session.OnSessionEndLis
         }
     }
 
+    /*
+        * This fragment displays the user's profile.
+        * It displays a chart of the relaxation times of the user's past sessions, and a chart of the
+        * number of sessions per day over the last week.
+     */
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -109,6 +114,10 @@ public class ProfileFragment extends Fragment implements Session.OnSessionEndLis
         return view;
     }
 
+    /*
+        * This method is called when a session ends.
+        * It refreshes the charts.
+     */
     private void lineChart(){
         // get float[] from database with all relaxation times
         DatabaseHelper dbHelper = new DatabaseHelper(getContext());
@@ -195,6 +204,9 @@ public class ProfileFragment extends Fragment implements Session.OnSessionEndLis
         indexesChart.invalidate();
     }
 
+    /*
+        * This creates a bar chart of the number of sessions per day over the last week.
+     */
     private void barChart(){
 
         // Get the number of sessions per day on the last week
@@ -253,6 +265,13 @@ public class ProfileFragment extends Fragment implements Session.OnSessionEndLis
         sessionActivity.invalidate();
 
     }
+
+    /*
+    * This method converts an array of floats to an ArrayList of Entries.
+    * It is used to plot the relaxation times over time.
+    * @param indexes: the array of floats to convert
+    * @return an ArrayList of Entries
+     */
     private ArrayList<Entry> dataValues(float[] indexes)
     {
         ArrayList<Entry> dataVal = new ArrayList<Entry>();
@@ -262,6 +281,12 @@ public class ProfileFragment extends Fragment implements Session.OnSessionEndLis
         return dataVal;
     }
 
+    /*
+    * This method converts an array of ints to an ArrayList of BarEntries.
+    * It is used to plot the number of sessions per day over the last week.
+    * @param indexes: the array of ints to convert
+    * @return an ArrayList of BarEntries
+     */
     private ArrayList<BarEntry> dataValues(int[] indexes)
     {
         ArrayList<BarEntry> dataVal = new ArrayList<BarEntry>();
@@ -271,6 +296,10 @@ public class ProfileFragment extends Fragment implements Session.OnSessionEndLis
         return dataVal;
     }
 
+    /*
+        * This method is called when a session ends.
+        * It refreshes the charts.
+     */
     @Override
     public void onSessionEnd() {
         // Refresh the session list when a session ends
@@ -278,6 +307,9 @@ public class ProfileFragment extends Fragment implements Session.OnSessionEndLis
         barChart();
     }
 
+    /*
+        * This class is used to format the values on the y axis of the bar chart.
+     */
     private static class IntegerValueFormatter extends com.github.mikephil.charting.formatter.ValueFormatter {
         @Override
         public String getFormattedValue(float value) {
