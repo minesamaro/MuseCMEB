@@ -2,8 +2,9 @@
 
 ## IMPORTANT: 
 If the Muse is not appearing even if you have turned on the Close Devices Settings, try going to the Device's Settings and turning on all non-allowed Permissions. We included this on the code but it has been happening nevertheless.
-
+<div style="text-align:center">
 <img src="https://github.com/minesamaro/MuseCMEB/assets/87450213/c262522f-9c68-4ac1-bd0f-d0dfebc6e473" alt="permissions_gif" height="400">
+</div>
 
 
 ## Purpose
