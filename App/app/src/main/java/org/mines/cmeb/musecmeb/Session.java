@@ -1,7 +1,6 @@
 package org.mines.cmeb.musecmeb;
 
 
-import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -86,7 +85,7 @@ public class Session extends AppCompatActivity {
         // TEST METHOD (comment if not needed)
         //testCircleView();
 
-        // TEST for LibTest
+        // Real method for LibTest
         acquireData();
     }
     @Override
@@ -141,7 +140,7 @@ public class Session extends AppCompatActivity {
                     endOfSessionLayout();
                 }
                 else {
-                    handler.postDelayed(this, 1000); // 3 seconds
+                    handler.postDelayed(this, 1000); // 1 seconds
                 }
             }
         };
