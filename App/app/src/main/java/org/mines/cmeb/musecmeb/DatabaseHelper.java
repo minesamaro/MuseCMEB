@@ -38,7 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		String createTableQuery = "CREATE TABLE " + TABLE_SESSIONS + " (" +
 				COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				COLUMN_STRESS_INDEXES + " TEXT, " +
-				COLUMN_RELAXATION_TIME + " INTEGER, " +
+				COLUMN_RELAXATION_TIME + " REAL, " +
 				COLUMN_START_DATE + " TEXT)";
 		db.execSQL(createTableQuery);
 
@@ -51,7 +51,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		ContentValues values2 = new ContentValues();
 		values2.put(COLUMN_STRESS_INDEXES, "100,62,62,62,62,62,53,53,53,53,53,57,57,57,57,57,43,43,43,43,43,36,36,36,36,36,44,44,44,44,44,44,53,53,53,53,53,54,54,54,54,54,54,54");
 		values2.put(COLUMN_RELAXATION_TIME, 9.5f);
-		values2.put(COLUMN_START_DATE, "2023-12-05");
+		values2.put(COLUMN_START_DATE, "2024-01-10");
 		long rowId2 = db.insert(TABLE_SESSIONS, null, values2);
 
 		ContentValues values3 = new ContentValues();
@@ -63,7 +63,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		ContentValues values4 = new ContentValues();
 		values4.put(COLUMN_STRESS_INDEXES, "100,62,62,62,62,62,53,53,53,53,53,57,57,57,57,57,43,43,43,43,43,36,36,36,36,36,44,44,44,44,44,44,53,53,53,53,53,54,54,54,54,54,54,54");
 		values4.put(COLUMN_RELAXATION_TIME, 2.23f);
-		values4.put(COLUMN_START_DATE, "2023-12-07" );
+		values4.put(COLUMN_START_DATE, "2024-01-09" );
 		long rowId4 = db.insert(TABLE_SESSIONS, null, values4);
 
 		ContentValues values5 = new ContentValues();
