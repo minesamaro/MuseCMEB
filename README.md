@@ -3,6 +3,8 @@
 ## IMPRTANT: 
 If the Muse is not appearing even if you have turned on the Close Devices Settings, try going to the Device's Settings and turning on all non-allowed Permissions. We included this on the code but it has been happening nevertheless.
 
+![Add Permissions](permission.gif)
+
 ## Purpose
 
 Create an application that measures the user's level of relaxation using Muse EEG data and provides pleasant visual feedback. The goal is to help the user relax and promote mental well-being.
